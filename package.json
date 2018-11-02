@@ -1,24 +1,92 @@
 {
-  "name": "node-yolog",
-  "description": "Logging module for nodejs.",
-  "version": "1.1.0",
-  "author": {
-    "name": "Johannes Tegnér",
-    "email": "jitedev@gmail.com"
-  },
-  "keywords": [
-    "logging",
-    "formatted",
-    "simple",
-    "toggleable"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Johannestegner/node-yolog"
-  },
-  "main": "./main.js",
-  "engines": {
-    "node": ">= 0.8.0"
-  },
-  "readmeFilename": "README.md"
+    "name": "node-yolog",
+    "description": "Logging module for nodejs.",
+    "version": "2.0.0",
+    "author": {
+        "name": "Johannes Tegnér",
+        "email": "jitedev@gmail.com"
+    },
+    "keywords": [
+        "logging",
+        "formatted",
+        "simple",
+        "toggleable",
+        "jitesoft",
+        "krig"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Johannestegner/node-yolog"
+    },
+    "eslintConfig": {
+        "parser": "babel-eslint",
+        "extends": "semistandard",
+        "ecmaFeatures": {},
+        "env": {
+            "shared-node-browser": true,
+            "es6": true,
+            "commonjs": true
+        },
+        "overrides": [
+            {
+                "files": [
+                    "*.node.js"
+                ],
+                "env": {
+                    "node": true,
+                    "browser": false
+                }
+            },
+            {
+                "files": [
+                    "*.web.js"
+                ],
+                "env": {
+                    "browser": true,
+                    "node": false
+                }
+            },
+            {
+                "files": [
+                    "*.test.js"
+                ],
+                "env": {
+                    "jest": true
+                }
+            }
+        ]
+    },
+    "main": "dist/index.js",
+    "readmeFilename": "README.md",
+    "devDependencies": {
+        "@babel/core": "^7.1.2",
+        "@babel/plugin-proposal-class-properties": "^7.1.0",
+        "@babel/plugin-proposal-decorators": "^7.1.2",
+        "@babel/plugin-proposal-nullish-coalescing-operator": "^7.0.0",
+        "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+        "@babel/plugin-proposal-optional-chaining": "^7.0.0",
+        "@babel/plugin-proposal-throw-expressions": "^7.0.0",
+        "@babel/plugin-transform-runtime": "^7.1.0",
+        "@babel/polyfill": "^7.0.0",
+        "@babel/preset-env": "^7.1.0",
+        "@babel/runtime": "^7.1.2",
+        "babel-core": "^7.0.0-bridge.0",
+        "babel-eslint": "^10.0.1",
+        "babel-jest": "^23.6.0",
+        "babel-loader": "^8.0.4",
+        "babel-plugin-module-resolver": "^3.1.1",
+        "clean-webpack-plugin": "^0.1.19",
+        "core-js": "^2.5.7",
+        "cross-env": "^5.2.0",
+        "eslint": "^5.7.0",
+        "jest": "^23.6.0",
+        "semistandard": "^12.0.1",
+        "uglifyjs-webpack-plugin": "^2.0.1",
+        "webpack": "^4.23.0",
+        "webpack-cli": "^3.1.2"
+    },
+    "scripts": {
+        "test": "semistandard /src && jest",
+        "build": "cross-env NODE_ENV=production && webpack -p"
+    }
 }
