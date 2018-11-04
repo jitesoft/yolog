@@ -1,7 +1,7 @@
 const getEnv = () => {
   return process.env.NODE_ENV === 'production' ? 'production' : 'development';
 };
-const Webpack = require('webpack');
+
 const Path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyPlugin = require('uglifyjs-webpack-plugin');
@@ -36,7 +36,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\*.js$/,
+        test: /\.js$/,
         exclude: [/node_modules/],
         include: [Path.join(__dirname, 'src')],
         loader: 'babel-loader'

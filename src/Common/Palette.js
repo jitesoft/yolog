@@ -1,29 +1,21 @@
 import Color from './Color';
 import Style from './Style';
 
-export {
-  Color,
-  Style,
-  Palette
-};
-
 /**
  * @abstract
  */
 export default class Palette {
-
   _availableColors = [];
   _availableStyles = [];
   _styles = {};
   _colors = {};
-
 
   /**
    *
    * @param {Color|Style|array} args List of colors and styles.
    */
   constructor (...args) {
-    for (let i=0, val = args[i];i<args.length;i++) {
+    for (let i = 0, val = args[i]; i < args.length; i++) {
       if (val instanceof Color) {
         this._colors[val.name] = val;
         this._availableColors.push(val.name);
@@ -34,8 +26,7 @@ export default class Palette {
     }
   }
 
-
-  static colorize (color, text) {}
+  colorize (color, style, text) {}
 
   get availableColors () {
 
@@ -73,10 +64,29 @@ export default class Palette {
     return this._colors['white'];
   }
 
-  get normal() {}
-  get bold () {}
-  get italic () {}
-  get underline () {}
-  get strikethrough () {}
+  get normal () {
+    return this._styles['normal'];
+  }
 
+  get bold () {
+    return this._styles['bold'];
+  }
+
+  get italic () {
+    return this._styles['italic'];
+  }
+
+  get underline () {
+    return this._styles['underline'];
+  }
+
+  get strikethrough () {
+    return this._styles['strikethrough'];
+  }
 }
+
+export {
+  Color,
+  Style,
+  Palette
+};

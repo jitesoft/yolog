@@ -1,4 +1,9 @@
-class InvalidArgumentError extends Error {}
+class InvalidArgumentError extends Error {
+  constructor (msg) {
+    super();
+    this.message = msg;
+  }
+}
 
 export {
   InvalidArgumentError

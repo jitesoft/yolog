@@ -21,7 +21,6 @@
     "eslintConfig": {
         "parser": "babel-eslint",
         "extends": "semistandard",
-        "ecmaFeatures": {},
         "env": {
             "shared-node-browser": true,
             "es6": true,
@@ -74,7 +73,6 @@
         "babel-eslint": "^10.0.1",
         "babel-jest": "^23.6.0",
         "babel-loader": "^8.0.4",
-        "babel-plugin-module-resolver": "^3.1.1",
         "clean-webpack-plugin": "^0.1.19",
         "core-js": "^2.5.7",
         "cross-env": "^5.2.0",

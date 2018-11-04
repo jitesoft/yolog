@@ -1,7 +1,8 @@
 import { InvalidArgumentError } from './Exceptions/InvalidArgumentError';
 
-class Yolog {
+export default class Yolog {
   _tags = [];
+  _plugins = [];
   _palette = null;
   _dateFunction = () => (new Date()).toLocaleString();
   _showFunctionName = false;
@@ -10,6 +11,27 @@ class Yolog {
     this._tags = tags;
     this._palette = palette;
     this._showFunctionName = false;
+    this._plugins = [];
+  }
+
+  /**
+   * Set plugin list.
+   * @param {array|OutputPlugin[]} plugins
+   * @returns {Yolog} Self.
+   */
+  set plugins (plugins) {
+    this._plugins = plugins;
+    return this;
+  }
+
+  /**
+   * Add a plugin to the logger.
+   * @param {OutputPlugin} plugin
+   * @return {Yolog} Self.
+   */
+  addPlugin (plugin) {
+    this._plugins.push(plugin);
+    return this;
   }
 
   /**
@@ -43,22 +65,42 @@ class Yolog {
    * @return {boolean} True if active, false if not.
    * @throws {InvalidArgumentError}
    */
-  get (tag) {}
+  get (tag) {
+    let t = this.tags.find(t => t.name === tag) ||
+    throw new InvalidArgumentError(`${tag} does not exist in tags.`);
+    return t.state;
+  }
 
   /**
    * Set state to active on one or many tags.
    * @param {array|string|string[]} tag Tag or tags to activate.
    * @return {Yolog} Self.
+   * @throws {InvalidArgumentError}
    */
-  on (...tag) {return this; }
+  on (...tag) {
+    tag.forEach((t) => {
+      let it = this.tags.find(i => i.name === t) ||
+      throw new InvalidArgumentError(`${t} does not exist in tags.`);
+      it.state = true;
+    });
+    return this;
+  }
 
   /**
    * Sets state to inactive on one or many tags.
    * @param {array|string|string[]} tag Tag or tags to inactivate.
    * @param tag
    * @return {Yolog} Self.
+   * @throws {InvalidArgumentError}
    */
-  off (...tag) { return this; }
+  off (...tag) {
+    tag.forEach((t) => {
+      let it = this.tags.find(i => i.name === t) ||
+      throw new InvalidArgumentError(`${t} does not exist in tags.`);
+      it.state = false;
+    });
+    return this;
+  }
 
   /**
    * Change the color of a given tag.
@@ -66,7 +108,12 @@ class Yolog {
    * @param {Color} color Color to change to.
    * @return {Yolog} Self
    */
-  color (tag, color) {return this; }
+  color (tag, color) {
+    const t = this.tags.find(i => i.name === tag) ||
+    throw new InvalidArgumentError(`${t} does not exist in tags.`);
+    t.color = color;
+    return this;
+  }
 
   /**
    * Change the style of given tag.
@@ -74,15 +121,30 @@ class Yolog {
    * @param {Style} style Style to change to.
    * @return {Yolog} Self
    */
-  style (tag, style) {return this; }
+  style (tag, style) {
+    const t = this.tags.find(i => i.name === tag) ||
+    throw new InvalidArgumentError(`${t} does not exist in tags.`);
+    t.style = style;
+    return this;
+  }
+
+  async _output (tag, text, ...args) {
+    this._plugins.forEach(async (p) => {
+      await p.write(tag, p.format(text, args));
+    });
+    return this;
+  }
 
   /**
    * Output with debug tag.
    * @param {string} text Text to print.
    * @param {...} [args] Argument list to insert into formatted text.
-   * @return {Yolog} Self.
+   * @return {Promise} Self.
    */
-  debug (text, ...args) {return this; }
+  async debug (text, ...args) {
+    const tag = this._tags.find(t => t.name === 'debug');
+    return this._output(tag, text, ...args);
+  }
 
   /**
    * Output with trace tag.
@@ -90,7 +152,10 @@ class Yolog {
    * @param {...} [args] Argument list to insert into formatted text.
    * @return {Yolog} Self.
    */
-  trace (text, ...args) {return this; }
+  async trace (text, ...args) {
+    const tag = this._tags.find(t => t.name === 'trace');
+    return this._output(tag, text, ...args);
+  }
 
   /**
    * Output with error tag.
@@ -98,7 +163,10 @@ class Yolog {
    * @param {...} [args] Argument list to insert into formatted text.
    * @return {Yolog} Self.
    */
-  error (text, ...args) {return this; }
+  async error (text, ...args) {
+    const tag = this._tags.find(t => t.name === 'error');
+    return this._output(tag, text, ...args);
+  }
 
   /**
    * Output with alert tag.
@@ -106,7 +174,10 @@ class Yolog {
    * @param {...} [args] Argument list to insert into formatted text.
    * @return {Yolog} Self.
    */
-  alert (text, ...args) {return this;}
+  async alert (text, ...args) {
+    const tag = this._tags.find(t => t.name === 'alert');
+    return this._output(tag, text, ...args);
+  }
 
   /**
    * Output with emergency tag.
@@ -114,7 +185,10 @@ class Yolog {
    * @param {...} [args] Argument list to insert into formatted text.
    * @return {Yolog} Self.
    */
-  emergency (text, ...args) {return this;}
+  async emergency (text, ...args) {
+    const tag = this._tags.find(t => t.name === 'emergency');
+    return this._output(tag, text, ...args);
+  }
 
   /**
    * Output with warning tag.
@@ -122,7 +196,10 @@ class Yolog {
    * @param {...} [args] Argument list to insert into formatted text.
    * @return {Yolog} Self.
    */
-  warning (text, ...args) {return this; }
+  async warning (text, ...args) {
+    const tag = this._tags.find(t => t.name === 'warning');
+    return this._output(tag, text, ...args);
+  }
 
   /**
    * Output with info tag.
@@ -130,8 +207,15 @@ class Yolog {
    * @param {...} [args] Argument list to insert into formatted text.
    * @return {Yolog} Self.
    */
-  info (text, ...args) {return this; }
+  async info (text, ...args) {
+    const tag = this._tags.find(t => t.name === 'info');
+    return this._output(tag, text, ...args);
+  }
 
-  exception (error) {return this; }
+  async exception (error) {
+    // TODO: Exception should show trace in {trace} tag.
+    const tag = this._tags.find(t => t.name === 'exception');
+    return this._output(tag, error.message);
+  }
 
 }

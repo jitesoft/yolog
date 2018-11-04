@@ -1,7 +1,6 @@
 import CommonPalette, { Color, Style } from '../Common/Palette';
 
 export default class Palette extends CommonPalette {
-
   constructor () {
     const colorCodes = [0, 1, 2, 3, 4, 5, 6, 7];
     const colorNames = ['black', 'red', 'green', 'yellow', 'blue', 'purple', 'cyan', 'white'];
@@ -23,5 +22,4 @@ export default class Palette extends CommonPalette {
 
     super(...out);
   }
-
 }

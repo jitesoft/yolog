@@ -1,4 +1,12 @@
 {
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "useBuiltIns": "usage"
+            }
+        ]
+    ],
     "plugins": [
         "@babel/plugin-proposal-object-rest-spread",
         [
@@ -7,18 +15,10 @@
                 "decoratorsBeforeExport": false
             }
         ],
-        "@babel/plugin-transform-runtime",
-        "@babel/plugin-proposal-class-properties",
+        ["@babel/plugin-transform-runtime", {}],
+        ["@babel/plugin-proposal-class-properties", { "loose": true }],
         "@babel/plugin-proposal-optional-chaining",
         "@babel/plugin-proposal-throw-expressions",
-        "@babel/plugin-proposal-nullish-coalescing-operator",
-        [
-            "module-resolver",
-            {
-                "root": [
-                    "./src"
-                ]
-            }
-        ]
+        "@babel/plugin-proposal-nullish-coalescing-operator"
     ]
 }

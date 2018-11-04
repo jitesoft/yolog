@@ -4,7 +4,7 @@ export default class Tag {
   _name;
   _style;
 
-  constructor(format, color, name, style) {
+  constructor (name, format, color, style) {
     this._color = color;
     this._format = format;
     this._name = name;
@@ -34,5 +34,13 @@ export default class Tag {
 
   set state (value) {
     this._state = value;
+  }
+
+  set color (value) {
+    this._color = value;
+  }
+
+  set style (value) {
+    this._style = value;
   }
 }
