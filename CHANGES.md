@@ -1,3 +1,5 @@
+v 2.0.0
+
 v 1.0.0 
  
  * Refactored the code to follow a standard that fits author better.  
