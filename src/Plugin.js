@@ -34,9 +34,8 @@ export default class Plugin {
    * @param {String} tag
    * @param {Boolean} [state]
    */
-  set (tag, state) {
-    state = state !== null ? state : !this.get(tag);
-    this.#tags[tag] = state;
+  set (tag, state = null) {
+    this.#tags[tag.toLowerCase()] = state !== null ? state : !this.get(tag);
   }
 
   /**
@@ -46,7 +45,7 @@ export default class Plugin {
    * @return {Boolean}
    */
   get (tag) {
-    return this.#tags[tag];
+    return this.#tags[tag.toLowerCase()];
   }
 
   /**
@@ -64,14 +63,7 @@ export default class Plugin {
    * @return {Array<String>}
    */
   get active () {
-    const result = [];
-    for (let [tag, state] of this.#tags) {
-      if (state) {
-        result.push(tag);
-      }
-    }
-
-    return result;
+    return Object.keys(this.#tags).filter(this.get.bind(this));
   }
 
 
