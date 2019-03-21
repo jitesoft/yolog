@@ -1,5 +1,5 @@
 {
-    "name": "node-yolog",
+    "name": "@jitesoft/yolog",
     "description": "Logging module for nodejs.",
     "version": "2.0.0",
     "license": "MIT",
@@ -7,49 +7,30 @@
         "main": "src/Yolog.js",
         "browser": "src/web/index.js"
     },
+    "main": "dist/index.js",
     "author": {
         "name": "Johannes Tegnér",
         "email": "jitedev@gmail.com"
     },
+    "readmeFilename": "README.md",
     "keywords": [
         "logging",
         "formatted",
         "simple",
         "toggleable",
         "jitesoft",
-        "krig"
+        "krig",
+        "async"
     ],
+    "bugs": {
+        "url": "https://gitlab.com/jitesoft/open-source/javascript/yolog/issues"
+    },
     "repository": {
         "type": "git",
-        "url": "https://github.com/Johannestegner/node-yolog"
+        "url": "https://gitlab.com/jitesoft/open-source/javascript/yolog"
     },
     "eslintConfig": {
-        "parser": "babel-eslint",
-        "extends": "semistandard",
-        "env": {
-            "shared-node-browser": true,
-            "es6": true,
-            "commonjs": true
-        },
         "overrides": [
-            {
-                "files": [
-                    "*.node.js"
-                ],
-                "env": {
-                    "node": true,
-                    "browser": false
-                }
-            },
-            {
-                "files": [
-                    "*.web.js"
-                ],
-                "env": {
-                    "browser": true,
-                    "node": false
-                }
-            },
             {
                 "files": [
                     "*.test.js"
@@ -60,9 +41,8 @@
             }
         ]
     },
-    "main": "dist/index.js",
-    "readmeFilename": "README.md",
     "dependencies": {
+        "@jitesoft/events": "^1.1.3",
         "@babel/runtime-corejs3": "^7.4.0"
     },
     "devDependencies": {
@@ -77,7 +57,6 @@
         "@babel/plugin-transform-runtime": "^7.4.0",
         "@babel/polyfill": "^7.4.0",
         "@babel/preset-env": "^7.4.1",
-        "@jitesoft/events": "^1.1.3",
         "babel-eslint": "^10.0.1",
         "babel-jest": "^24.5.0",
         "babel-loader": "^8.0.5",
@@ -93,7 +72,7 @@
     },
     "scripts": {
         "test": "semistandard /src && jest",
-        "build:prod": "cross-env NODE_ENV=production && webpack -p",
-        "build:dev": "cross-env NODE_ENV=develop && webpack"
+        "build:prod": "cross-env NODE_ENV=production webpack -p",
+        "build:dev": "cross-env NODE_ENV=develop webpack"
     }
 }

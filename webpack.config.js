@@ -2,14 +2,15 @@ const getEnv = () => {
   return process.env.NODE_ENV === 'production' ? 'production' : 'development';
 };
 
+console.log(getEnv());
+
 const Path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const common = {
-  plugins: [
-    new CleanWebpackPlugin({})
-  ],
   mode: getEnv(),
+  optimization: {
+    minimize: getEnv() === 'production'
+  },
   module: {
     rules: [
       {
@@ -21,33 +22,34 @@ const common = {
   }
 };
 
-if (getEnv() === 'production') {
-  common.optimization.minimize = true;
-}
-
-const base = Object.assign({
+const index = Object.assign({
   entry: {
     'index': [
       Path.join(__dirname, 'src', 'Yolog.js')
     ]
+  },
+  output: {
+    filename: 'index.js',
+    libraryTarget: 'commonjs'
   }
 }, common);
 
 const node = Object.assign({
   entry: {
-    'index.node': [
+    'node': [
       Path.join(__dirname, 'src', 'node', 'index.js')
     ]
   },
   target: 'node',
   output: {
-    filename: 'node.js'
+    filename: 'node.js',
+    libraryTarget: 'commonjs'
   }
 }, common);
 
 const web = Object.assign({
   entry: {
-    'index.node': [
+    'browser': [
       Path.join(__dirname, 'src', 'web', 'index.js')
     ]
   },
@@ -60,5 +62,5 @@ const web = Object.assign({
 }, common);
 
 module.exports = [
-  base, web, node
+  index, web, node
 ];

@@ -1,5 +1,9 @@
 v 2.0.0
-
+ * Full re-write, moved package in under the @jitesoft org.
+ * New Plugin system.
+ * New build setup (using babel and webpack).
+ * Browser and Node version with identical API.  
+   
 v 1.0.0 
  
  * Refactored the code to follow a standard that fits author better.  

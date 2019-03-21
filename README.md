@@ -1,145 +1,195 @@
-node-yolog
+Yolog
 ==========
-[![NPM](https://nodei.co/npm/node-yolog.png?downloads=true&stars=true)](https://nodei.co/npm/node-yolog/)
 
+Simple pluggable async logger for node and browser alike.  
 
-Simple logger for node js that color codes and formats output.  
-The main reason for the existence of the package is the ability to turn on and off log tags in runtime.  
+Ever wanted a logger with a simple API that you could easily write a minimal plugin for? A logger which would work in both
+your browser and in your node environment?
 
+Well, then Yolog might be something for you.
 
-### Installation:
+## Installation
 
-`npm install node-yolog [--save]`  
+Simply use your favorite package manager that can pull packages from the npm repository!
 
-### Usage.
-
-##### Tags
-
-Yolog has the following logging tags:
-```javascript
-debug (string, arguments);
-info (string, arguments);
-warning (string, arguments);
-error (string, arguments);
-todo (string arguments);
-trace (arguments);
+```bash
+npm i --save @jitesoft/yolog
+yarn add @jitesoft/yolog
+someothermanager --save-package-to-json-file @jitesoft/yolog
 ```
-All (but trace) strings uses % placeholders which are replaced with the args passed, accepted placeholders are:
 
-  * `%s` - string
-  * `%d` - number
-  * `%j` - json
+## Usage
 
-The `trace` function takes a number of arguments and prints them in a list.
-Also worth mentioning is that the trace function will print objects, but it will only go 3 levels deep.  
-Max depth can be changed by calling the `setObjectMaxDepth` function with new max depth as parameter (`null` means no limit, this can crash the application if the object is circular).
+Yolog have three base files which you can make use of when it is compiled:
 
-##### Enable and Disable tags.
-To enable or disable any tags, the `set(boolean, args);` function is used.
-First arg is if the tags you want to change should be **on** or **off** (`boolean` value),
-the args after first should be string representations of the tags.
+* index.js
+* node.js
+* browser.js
 
-*The tag names are the same as the functions.*
+The `index.js` is only the API (contains the `Yolog` and `Plugin` interfaces and such) and could possibly be useful
+if you wish to create your own plugin but don't care about the other stuff.
 
-There is also a `get(tag)` function, which takes a tag name in as parameter and returns `boolean` value,
-where `true` indicates that the tag is `on` and `false` that its `off`.
+The `browser.js` file contains the same code as the `index.js` and an extra `ConsolePlugin` which is pre-initialized if 
+using the `default` value from the package.
 
-All tags are active by default.  
-Disabling/Enabling a tag that do not exist will output a error message (even if errors are turned off).  
+The `node.js` file contains the same code as the `index.js` and an extra `ConsolePlugin` which is pre-initialized if 
+using the `default` value from the package.
 
-##### Change color of tags.
-Not all editors and consoles outputs the colors of the tags as neatly as others, and not all find the default colors to be the preferred ones.  
-So naturally, its possible to change the colors.  
-The following colors are available:  
+When including the script, there will be a global `Yolog` object containing `logger` (which is an instance of yolog
+ready to use with the console plugin), `Yolog` which is the logger itself, if you wish to create a new instance yourself.
+`ConsolePlugin`, which is a plugin that produces output to the console and the `Plugin` class (which is used to create new plugins)
 
-  * black
-  * red
-  * green
-  * yellow
-  * blue
-  * purple
-  * cyan
-  * white
+Simply put:
 
-Setting a specific color on a tag is done by the `setColor` function.
+```html
+<script src="yolog/browser.js"></script>
+<script>
+    const logger = Yolog.logger;
+    logger.debug('Weee!');
+</script>
+```
 
 ```javascript
-logger.setColor("error", "cyan");
-// Which will change the color for error tagged output to cyan instead of the default red.
+import logger from '@jitesoft/yolog';
+logger.debug('Weee!')
 ```
 
-##### Function names.
-As of v 0.0.7 its possible to get Yolog to print out function names in the logs.  
-This should be seen as an experimental feature.  
-Activating the feature (its off by default) is done by the: `logger.setShowFunctionName(true);` command.  
-Generated output will look something like:  
 ```javascript
-Debug	(14:57:01)[myFunction]: Test output!
-```
-In case of global or anonymous scope, the function name will be `[global/anonymous]`.
-
-##### Timestamps
-As of v 1.1.0 its possible to set a function to use for timestamps.  
-Change the timestamp function by calling the `logger.setDateFunction(cb);`.  
-The function takes a callback which should return a string.  
-  
-Example:  
-```
-logger.setDateFunction(function() {
-  return "I do not care about the date!";
-});
-
-logger.debug('Hi!');
-// Will output something like:
-// Debug (I do not care about the date!): Hi!
-// Preferably, a timestamp should be returned, but thats up to you!
-
-logger.setDateFunction(function() {
-  return (new Date()).getTime();
-});
-// Will output something like:
-// Debug (1435647554656): Hi!
+const logger = require('@jitesoft/yolog');
+logger.debug('Weee!')
 ```
 
+## Log tags
 
-### Example usage.
-```javascript
-var logger = require('node-yolog');
-// By default, all logging tags are set to active, IE all of them will output to console, this can be changed with the 'set' function as:
-if(app.get("env") !== "development") {
-  logger.set(false, "debug", "trace", "todo"); // Will disable output from debug and trace tagged output.
+The Yolog class have a set of pre-defined tags which are used to output different type of loggs with. It is possible to turn a 
+tag on and off via code, both in a plugin or in the Yolog instance itself.  
+The pre-defined tags are (name and default value):
+
+```json
+{
+    "debug": true,
+    "info": true,
+    "warning": true,
+    "error": true,
+    "critical": true,
+    "alert": true,
+    "emergency": true
 }
-// Check if a tag is active:
-if(!logger.get("debug")) {
-  // But the debug tag is disabled, so we write an error instead!
-  logger.info("Debug tag was not active!");
-  // If the get function is called without a tag argument, it will return the whole tags object: {debug: true ... }
+```
+
+_All tag (methods) support the same placeholders as `console.log` or `util.format` would (`%s`, `%d` etc)._
+
+Turning a tag on or off is done by calling the `set(tag, state = null)` method on either the Yolog instance (if you wish that no output
+should be done for that tag at all) or by the `set(tag, state = null)` method of the plugin that you wish to specifically not get logs for
+the tag from.
+
+If no state is passed with the `set` method, it will toggle the state.
+
+If you wish to add a new tag to yolog and a plugin, the `set` method can also be used. Just pass the tag that you wish
+to create as the tag, and it will be set to the value that you pass as second argument.
+
+You can also check the state of a given tag by using the `get(tag)` method on either the Yolog instance or the plugin.
+
+### As event handler
+
+The Yolog instance have a built-in event handler which can be used to listen to given tags instead of logging them
+with a plugin.  
+There are `on`, `off` and `once` methods available and they work basically as any normal event handler should.
+
+The events emitted looks like the following:
+
+```js
+event = {
+  data: {
+    message: "message" /* Message passed to the logger. */,
+    arguments: [ /* argument list passed to the logger. */ ],
+    timestamp: 123 /* Unix-timestamp (ms) when the logger was invoked. */, 
+    tag: "tag" /* The tag that was invoked. */
+  }
+};
+
+// That is...
+console.log(event.data.message); // Will give you the message property.
+```
+
+_The package that Yolog uses can be found [here (@jitesoft/events)](https://www.npmjs.com/package/@jitesoft/events) if you wish to 
+check out more specific details._
+
+## Plugins
+
+Plugins are minimal classes which can be used to extend the logger to use other type of outputs!   
+When writing a new plugin, the `Plugin` class in the base lib is used as a base class (if using es6 inheritance),
+the only method that really have to be implemented is the `log` method, the base class takes care of the rest!
+
+```js
+import {Plugin} from '@jitesoft/yolog';
+
+export default class MyPlugin extends Plugin {  
+  /**
+   * Method called when a log message is intercepted and the plugin is listening to the given tag.
+   *
+   * @param {String} tag Tag which was used when logging the message.
+   * @param {Number} timestamp Timestamp (in ms) when the log was intercepted by the Yolog instance.
+   * @param {String} message
+   * @return Promise<void>
+   */
+  async log (tag, timestamp, message) {
+    // Do your magic here! (return a promise or use the async/await keywords!)
+    return await something.something(message);
+  }  
 }
-// Write debug type output:
-logger.debug("some debug text. You can %s also. The placeholders are the same as the standard node util.format takes (%s, %d, %j).", "add arguments");
-// The output above will not be printed in this case.
-
 ```
-  
-  
-### Misc
-The Yolog API might change in feature releases, but no functionality will be removed between two minor versions.  
-Whenever a function is about to be removed, it will be tagged with the @deprecated tag.  
-Keep an eye on the [releases](https://github.com/Johannestegner/node-yolog/releases) page for any changes.  
-  
-Any bugs, features or input can be reported to the [issue tracker](https://github.com/Johannestegner/node-yolog/issues) at github.
 
-##### Versioning.
+Plugin interface:
 
-Yolog tries to follow [Semantic Versioning 2.0.0](http://semver.org/)  
-
+```typescript
+interface PluginInterface {
+  log (tag: string, timestamp: number, message: string): Promise<void>; /*Abstract, only method required to be implementd. */
+  set (tag: string, state: boolean|null): void;
+  get (tag: string): boolean|undefined;
+  /*get*/ active (): Array<string>;
+  /*set*/ priority (value: number): void;
+  /*get*/ priority (): number;
+}
 ```
-Summary
 
-Given a version number MAJOR.MINOR.PATCH, increment the:
+To add a new plugin to the Yolog instance, call the `addPlugin(plugin)` method, removal can be done with `removePlugin(plugin)`.
 
-MAJOR version when you make incompatible API changes,
-MINOR version when you add functionality in a backwards-compatible manner, and
-PATCH version when you make backwards-compatible bug fixes.
-Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.
+## Notes
+
+Any undocumented features are either in development or working as intended but not yet fully tested or documented. Use with care.
+
+## License
+
+```text
+The MIT License (MIT)
+
+Copyright (c) 2019 Johannes Tegnér / Jitesoft / KRIGio AB
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 ```
+
+Original version written by Johannes Tegnér 2014 using same MIT license.
+
+
+### Versioning.
+
+Yolog follows the [Semantic Versioning 2.0.0](http://semver.org/)  
+This basically means that no API breaking changes will occur without a new major version release, features might be added
+during a minor release and patches are only fixes.

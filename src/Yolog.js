@@ -1,5 +1,6 @@
 import Plugin from './Plugin';
 import { EventHandler, Event } from '@jitesoft/events';
+import { format } from "util";
 
 /**
  * @class Yolog
@@ -11,7 +12,16 @@ export default class Yolog {
   /** @type {Array<Plugin>} */
   #plugins = [];
   #timestamp = () => { return (new Date()).getTime() };
-  #activeTags = { };
+  #formatter = (message, ...args) => { return format(message, ...args); };
+  #tags = {
+    'debug': true,
+    'info': true,
+    'warning': true,
+    'error': true,
+    'critical': true,
+    'alert': true,
+    'emergency': true
+  };
 
   /**
    * Use the logger as an event handler and add a callback that will fire on a specific tag.
@@ -65,7 +75,7 @@ export default class Yolog {
    */
   get active () {
     const result = [];
-    for (let [tag, state] of this.#activeTags) {
+    for (let [tag, state] of this.#tags) {
       if (state) {
         result.push(tag);
       }
@@ -82,8 +92,8 @@ export default class Yolog {
    * @param {Boolean} [state] State to set the tag to.
    */
   set (tag, state = null) {
-    state = state ?? !this.get(tag);
-    this.#activeTags[tag] = state;
+    state = state !== null ? state : !this.get(tag);
+    this.#tags[tag] = state;
   }
 
   /**
@@ -93,7 +103,16 @@ export default class Yolog {
    * @return {Boolean}
    */
   get (tag) {
-    return this.#activeTags[tag];
+    return this.#tags[tag];
+  }
+
+  /**
+   * Get list of plugins in the Yolog instance.
+   *
+   * @return {Array<Plugin>}
+   */
+  get plugins () {
+    return this.#plugins;
   }
 
   /**
@@ -118,17 +137,24 @@ export default class Yolog {
     }
   }
 
-  #log (tag, message, ...args) {
-    if (!this.#activeTags[tag]) {
+  async #log (tag, message, ...args) {
+    if (!this.#tags[tag]) {
       return;
     }
 
+    if (!!args && args.length > 0) {
+      message = this.#formatter(message, ...args);
+    }
+
     const time = this.#timestamp();
-    this.#plugins.forEach((plugin) => {
-      if (plugin.tags.includes(tag)) {
-        plugin.log(tag, time, message, ...args);
+    const promises = this.#plugins.map((plugin) => {
+      if (plugin.get(tag)) {
+        return plugin.log(tag, time, message);
       }
+      return Promise.resolve();
     });
+
+    await Promise.all(promises);
 
     if (this.#eventHandler._listeners.length > 0) {
       this.#eventHandler.emit(tag, new Event({
@@ -143,33 +169,44 @@ export default class Yolog {
   //region Log methods.
 
   /**
-   * Log a debug message.
+   * Call a custom tag not already defined.
    *
-   * @param {String} message
+   * @param {String} tag Tag name.
+   * @param {String} message Message to log.
    * @param {...any} [args] Argument list to pass to plugins for formatting.
    */
-  debug (message, ...args) {
-    this.#log('debug', message, ...args);
+  async custom (tag, message, ...args) {
+    await this.#log(tag, message, ...args);
+  }
+
+  /**
+   * Log a debug message.
+   *
+   * @param {String} message Message to log.
+   * @param {...any} [args] Argument list to pass to plugins for formatting.
+   */
+  async debug (message, ...args) {
+    await this.#log('debug', message, ...args);
   }
 
   /**
    * Log a info message.
    *
-   * @param {String} message
+   * @param {String} message Message to log.
    * @param {...any} [args] Argument list to pass to plugins for formatting.
    */
-  info (message, args) {
-    this.#log('info', message, args);
+  async info (message, ...args) {
+    await this.#log('info', message, ...args);
   }
 
   /**
    * Log a warning message.
    *
-   * @param {String} message
+   * @param {String} message Message to log.
    * @param {...any} [args] Argument list to pass to plugins for formatting.
    */
-  warning (message, args) {
-    this.#log('warning', message, args);
+  async warning (message, ...args) {
+    await this.#log('warning', message, ...args);
   }
 
   /**
@@ -178,40 +215,38 @@ export default class Yolog {
    * @param {String} message
    * @param {...any} [args] Argument list to pass to plugins for formatting.
    */
-  error (message, args) {
-    this.#log('error', message, args);
+  async error (message, ...args) {
+    await this.#log('error', message, ...args);
   }
 
   /**
    * Log a critical message.
    *
-   * @param {String} message
+   * @param {String} message Message to log.
    * @param {...any} [args] Argument list to pass to plugins for formatting.
    */
-  critical (message, args) {
-    this.#log('critical', message, args);
-
+  async critical (message, ...args) {
+    await this.#log('critical', message, ...args);
   }
 
   /**
    * Log an alert message.
    *
-   * @param {String} message
+   * @param {String} message Message to log.
    * @param {...any} [args] Argument list to pass to plugins for formatting.
    */
-  alert (message, args) {
-    this.#log('alert', message, args);
-
+  async alert (message, ...args) {
+    await this.#log('alert', message, ...args);
   }
 
   /**
    * Log an emergency message.
    *
-   * @param {String} message
+   * @param {String} message Message to log.
    * @param {...any} [args] Argument list to pass to plugins for formatting.
    */
-  emergency (message, args) {
-    this.#log('emergency', message, args);
+  async emergency (message, ...args) {
+    await this.#log('emergency', message, ...args);
   }
 
   //endregion
