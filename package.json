@@ -1,6 +1,6 @@
 {
     "name": "@jitesoft/yolog",
-    "description": "Logging module for nodejs.",
+    "description": "Simple pluggable async logger for node and browser alike.",
     "license": "MIT",
     "esnext": {
         "main": "src/node/index.js",
