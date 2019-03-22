@@ -1,16 +1,15 @@
 {
     "name": "@jitesoft/yolog",
     "description": "Logging module for nodejs.",
-    "version": "2.0.0",
     "license": "MIT",
     "esnext": {
-        "main": "src/Yolog.js",
+        "main": "src/node/index.js",
         "browser": "src/web/index.js"
     },
     "main": "dist/index.js",
     "author": {
         "name": "Johannes Tegnér",
-        "email": "jitedev@gmail.com"
+        "email": "johannes@jitesoft.com"
     },
     "readmeFilename": "README.md",
     "keywords": [

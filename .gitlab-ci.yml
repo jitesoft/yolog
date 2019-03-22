@@ -1,0 +1,68 @@
+include:
+  - https://gitlab.com/jitesoft/gitlab-ci-lib/raw/master/code_quality.yml
+  - https://gitlab.com/jitesoft/gitlab-ci-lib/raw/master/dependency_scanning.yml
+
+stages:
+  - test
+  - build
+  - deploy
+  - analyse
+
+test:
+  stage: test
+  image: jitesoft/node-base
+  variables:
+    NODE_ENV: development
+  before_script:
+    - npm install
+  script:
+    - npm run test
+
+quality:
+  extends: .code_quality
+  stage: analyse
+
+dependencies:
+  extends: .dependency_scanning
+  stage: analyse
+
+build:
+  stage: build
+  variables:
+    NODE_ENV: development
+  image: jitesoft/node-base
+  before_script:
+    - npm install
+  script:
+    - mkdir package
+    - npm run build:prod
+    - mv README.md package
+    - mv LICENSE package
+    - mv dist package
+    - mv src package
+    - cat package.templ | sed -e "s/\${version}/${CI_COMMIT_TAG}/" > package/package.json
+  artifacts:
+    when: on_success
+    expire_in: 1 day
+    paths:
+      - package
+  only:
+    - tags
+
+deploy:
+  stage: deploy
+  image: jitesoft/node-base:latest
+  variables:
+    GIT_STRATEGY: none
+  dependencies:
+    - build
+  before_script:
+    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+    - npm whoami
+  script:
+    - cd package
+    - npm publish --access public
+  after_script:
+    - rm -f ~/.npmrc
+  only:
+    - tags

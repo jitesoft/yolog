@@ -250,6 +250,7 @@ export default class Yolog {
   //endregion
 }
 
+const logger = new Yolog();
 export {
-  Yolog, Plugin
+  Yolog, Plugin, logger
 };
