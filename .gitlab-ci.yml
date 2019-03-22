@@ -38,7 +38,7 @@ build:
     - npm run build:prod
     - mv README.md package
     - mv LICENSE package
-    - mv dist package
+    - mv dist/* package
     - mv src package
     - cat package.templ | sed -e "s/\${version}/${CI_COMMIT_TAG}/" > package/package.json
   artifacts:
