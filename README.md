@@ -51,11 +51,15 @@ Simply put:
 
 ```javascript
 import logger from '@jitesoft/yolog';
+import logger from '@jitesoft/yolog/browser'; // Browser specific
+import logger from '@jitesoft/yolog/node';    // Node specific
 logger.debug('Weee!')
 ```
 
 ```javascript
 const logger = require('@jitesoft/yolog');
+const logger = require('@jitesoft/yolog/browser'); // Browser specific
+const logger = require('@jitesoft/yolog/node');    // Node specific
 logger.debug('Weee!')
 ```
 
