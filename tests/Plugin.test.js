@@ -53,7 +53,7 @@ describe('Tests for plugin class.', () => {
       expect(plugin.get('debug')).toBe(false);
     });
 
-    test('Setting non-existing tag will create tage.', () => {
+    test('Setting non-existing tag will create tag.', () => {
       expect(plugin.get('abc')).toBe(undefined);
       plugin.set('abc', false);
       expect(plugin.get('abc')).toBe(false);

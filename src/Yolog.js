@@ -1,6 +1,6 @@
 import Plugin from './Plugin';
 import { EventHandler, Event } from '@jitesoft/events';
-import { format } from "util";
+import { format } from 'util';
 
 /**
  * @class Yolog
@@ -8,20 +8,24 @@ import { format } from "util";
  * Main class for the Yolog logging helper.
  */
 export default class Yolog {
-  #eventHandler = new EventHandler();
+  #eventHandler;
   /** @type {Array<Plugin>} */
-  #plugins = [];
-  #timestamp = () => { return (new Date()).getTime() };
-  #formatter = (message, ...args) => { return format(message, ...args); };
-  #tags = {
-    'debug': true,
-    'info': true,
-    'warning': true,
-    'error': true,
-    'critical': true,
-    'alert': true,
-    'emergency': true
+  #plugins;
+  /** @type {Object} */
+  #tags;
+
+  #timestamp = () => {
+    return (new Date()).getTime();
   };
+  #formatter = (message, ...args) => {
+    return format(message, ...args);
+  };
+
+  constructor (plugins = [], tags = { 'debug': true, 'info': true, 'warning': true, 'error': true, 'critical': true, 'alert': true, 'emergency': true }) {
+    this.#eventHandler = new EventHandler();
+    this.#tags = tags;
+    this.#plugins = plugins;
+  }
 
   /**
    * Use the logger as an event handler and add a callback that will fire on a specific tag.
@@ -74,14 +78,11 @@ export default class Yolog {
    * @return {Array}
    */
   get active () {
-    const result = [];
-    for (let [tag, state] of this.#tags) {
-      if (state) {
-        result.push(tag);
-      }
-    }
+    return Object.keys(this.#tags).filter(this.get.bind(this));
+  }
 
-    return result;
+  get available () {
+    return Object.keys(this.#tags);
   }
 
   /**
@@ -92,8 +93,7 @@ export default class Yolog {
    * @param {Boolean} [state] State to set the tag to.
    */
   set (tag, state = null) {
-    state = state !== null ? state : !this.get(tag);
-    this.#tags[tag] = state;
+    this.#tags[tag.toLowerCase()] = state !== null ? state : !this.get(tag);
   }
 
   /**
@@ -103,7 +103,7 @@ export default class Yolog {
    * @return {Boolean}
    */
   get (tag) {
-    return this.#tags[tag];
+    return this.#tags[tag.toLowerCase()];
   }
 
   /**
@@ -131,14 +131,14 @@ export default class Yolog {
    * @param {Plugin} plugin
    */
   removePlugin (plugin) {
-    const index = this.#plugins.indexOf(plugin);
+    const index = this.#plugins.findIndex((p) => p.id === plugin.id);
     if (index !== -1) {
-      this.#plugins = this.#plugins.splice(index, 1);
+      this.#plugins.splice(index, 1);
     }
   }
 
   async #log (tag, message, ...args) {
-    if (!this.#tags[tag]) {
+    if (tag in this.#tags && this.#tags[tag] === false) {
       return;
     }
 
@@ -148,7 +148,7 @@ export default class Yolog {
 
     const time = this.#timestamp();
     const promises = this.#plugins.map((plugin) => {
-      if (plugin.get(tag)) {
+      if (plugin.get(tag) === true) {
         return plugin.log(tag, time, message);
       }
       return Promise.resolve();
@@ -156,14 +156,12 @@ export default class Yolog {
 
     await Promise.all(promises);
 
-    if (this.#eventHandler._listeners.length > 0) {
-      this.#eventHandler.emit(tag, new Event({
-        message: message,
-        arguments: args,
-        timestamp: time,
-        tag: tag
-      }));
-    }
+    this.#eventHandler.emit(tag, new Event({
+      message: message,
+      arguments: args,
+      timestamp: time,
+      tag: tag
+    }));
   }
 
   //region Log methods.
@@ -254,4 +252,4 @@ export default class Yolog {
 
 export {
   Yolog, Plugin
-}
+};

@@ -20,7 +20,11 @@
         "toggleable",
         "jitesoft",
         "krig",
-        "async"
+        "async",
+        "node-yolog",
+        "node",
+        "browser",
+        "plugin"
     ],
     "bugs": {
         "url": "https://gitlab.com/jitesoft/open-source/javascript/yolog/issues"
@@ -41,11 +45,10 @@
             }
         ]
     },
-    "dependencies": {
-        "@jitesoft/events": "^1.1.3",
-        "@babel/runtime-corejs3": "^7.4.0"
-    },
+    "dependencies": {},
     "devDependencies": {
+        "@jitesoft/events": "^1.1.3",
+        "@babel/runtime-corejs3": "^7.4.0",
         "@babel/core": "^7.4.0",
         "@babel/plugin-proposal-class-properties": "^7.4.0",
         "@babel/plugin-proposal-decorators": "^7.4.0",

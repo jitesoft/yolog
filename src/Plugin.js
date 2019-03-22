@@ -1,5 +1,12 @@
 /** @abstract */
 export default class Plugin {
+  static id = 0;
+  #id = Plugin.id++;
+
+  get id() {
+    return this.#id;
+  }
+
   #priority = 0;
   #tags = {
     'debug': true,
