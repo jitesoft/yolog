@@ -1,9 +1,26 @@
 {
+  "env": {
+    "test": {
+      "presets": [
+        [
+          "@jitesoft/main", {
+          "transformRuntime": {
+            "corejs": 3,
+            "useESModules": false
+          }
+        }
+        ]
+      ]
+    }
+  },
   "presets": [
     [
       "@jitesoft/main",
       {
-
+        "transformRuntime": {
+          "corejs": 3,
+          "useESModules": true
+        }
       }
     ]
   ]

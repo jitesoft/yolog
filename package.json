@@ -32,18 +32,6 @@
         "type": "git",
         "url": "https://gitlab.com/jitesoft/open-source/javascript/yolog"
     },
-    "eslintConfig": {
-        "overrides": [
-            {
-                "files": [
-                    "*.test.js"
-                ],
-                "env": {
-                    "jest": true
-                }
-            }
-        ]
-    },
     "dependencies": {
         "core-js": "^3.0.0",
         "@babel/core": "^7.4.0",
