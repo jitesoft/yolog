@@ -75,12 +75,17 @@ export default class Yolog {
   /**
    * Get a list of tags that are active.
    *
-   * @return {Array}
+   * @return {Array<String>}
    */
   get active () {
     return Object.keys(this.#tags).filter(this.get.bind(this));
   }
 
+  /**
+   * Get all available tags.
+   *
+   * @return {Array<String>}
+   */
   get available () {
     return Object.keys(this.#tags);
   }

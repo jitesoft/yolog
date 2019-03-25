@@ -1,10 +1,12 @@
 {
   "presets": [
-    ["@jitesoft/main",
+    [
+      "@jitesoft/main",
       {
         "presetEnv": {
           "targets": "> 0.2%, not dead"
         }
       }
-    ]]
+    ]
+  ]
 }
