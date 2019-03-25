@@ -23,11 +23,9 @@ dependencies:
 
 build:
   stage: build
-  variables:
-    NODE_ENV: development
   image: jitesoft/node-base
   before_script:
-    - npm install
+    - npm install --dev
   script:
     - mkdir package
     - npm run build:prod
