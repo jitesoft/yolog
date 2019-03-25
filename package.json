@@ -32,7 +32,7 @@
         "url": "https://gitlab.com/jitesoft/open-source/javascript/yolog"
     },
     "dependencies": {
-        "@jitesoft/sprintf": "^0.0.1",
+        "@jitesoft/sprintf": "^0.0.2",
         "core-js": "^3.0.0",
         "@babel/core": "^7.4.0",
         "@jitesoft/babel-preset-main": "^1.0.0",
@@ -40,7 +40,8 @@
         "babel-loader": "^8.0.5",
         "cross-env": "^5.2.0",
         "webpack": "^4.29.6",
-        "webpack-cli": "^3.3.0"
+        "webpack-cli": "^3.3.0",
+        "@babel/runtime-corejs3": "^7.4.2"
     },
     "devDependencies": {
         "babel-eslint": "^10.0.1",

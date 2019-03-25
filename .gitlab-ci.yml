@@ -25,7 +25,7 @@ build:
   stage: build
   image: jitesoft/node-base
   before_script:
-    - npm install --dev
+    - npm install
   script:
     - mkdir package
     - npm run build:prod
