@@ -1,0 +1,3 @@
+[submodule "plugins/file"]
+	path = plugins/file
+	url = git@gitlab.com:jitesoft/open-source/javascript/yolog-plugins/file.git

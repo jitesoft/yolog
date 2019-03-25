@@ -1,6 +1,6 @@
 import Plugin from './Plugin';
 import { EventHandler, Event } from '@jitesoft/events';
-import { format } from 'util';
+import sprintf from '@jitesoft/sprintf';
 
 /**
  * @class Yolog
@@ -18,7 +18,7 @@ export default class Yolog {
     return (new Date()).getTime();
   };
   #formatter = (message, ...args) => {
-    return format(message, ...args);
+    return sprintf(message, ...args);
   };
 
   constructor (plugins = [], tags = { 'debug': true, 'info': true, 'warning': true, 'error': true, 'critical': true, 'alert': true, 'emergency': true }) {

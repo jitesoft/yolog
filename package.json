@@ -18,7 +18,6 @@
         "simple",
         "toggleable",
         "jitesoft",
-        "krig",
         "async",
         "node-yolog",
         "node",
@@ -33,6 +32,7 @@
         "url": "https://gitlab.com/jitesoft/open-source/javascript/yolog"
     },
     "dependencies": {
+        "@jitesoft/sprintf": "^0.0.1",
         "core-js": "^3.0.0",
         "@babel/core": "^7.4.0",
         "@jitesoft/babel-preset-main": "^1.0.0",
