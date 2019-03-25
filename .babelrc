@@ -5,7 +5,6 @@
         [
           "@jitesoft/main", {
           "transformRuntime": {
-            "corejs": 3,
             "useESModules": false
           }
         }
@@ -18,7 +17,6 @@
       "@jitesoft/main",
       {
         "transformRuntime": {
-          "corejs": 3,
           "useESModules": true
         }
       }
