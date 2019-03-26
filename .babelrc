@@ -1,8 +1,6 @@
 {
   "presets": [
-    [
-      "@jitesoft/main"
-    ]
+    "@jitesoft/main"
   ],
   "env": {
     "test": {
@@ -10,10 +8,7 @@
         [
           "@jitesoft/main",
           {
-            "transformRuntime": {
-              "corejs": { "version": 3, "proposals": true },
-              "useESModules": false
-            }
+            "modules": "commonjs"
           }
         ]
       ]
