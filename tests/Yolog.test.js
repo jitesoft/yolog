@@ -13,7 +13,6 @@ class TestPlugin extends Plugin {
   }
 }
 
-
 describe('Tests for Yolog class.', () => {
   let logger = null;
   let plugin = null;

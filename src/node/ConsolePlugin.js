@@ -1,5 +1,4 @@
 import { Plugin } from '../Yolog';
-import { format } from 'util';
 
 export default class ConsolePlugin extends Plugin {
   #colors = {
