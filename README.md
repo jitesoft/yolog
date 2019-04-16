@@ -81,7 +81,8 @@ The pre-defined tags are (name and default value):
 }
 ```
 
-_All tag (methods) support the same placeholders as `console.log` or `util.format` would (`%s`, `%d` etc)._
+_All tag (methods) support the same placeholders as `console.log` or `util.format` would (`%s`, `%d` etc). Yolog uses the
+[@jitesoft/sprinf](https://www.npmjs.com/package/@jitesoft/sprintf) package to have the same functionality cross env._
 
 Turning a tag on or off is done by calling the `set(tag, state = null)` method on either the Yolog instance (if you wish that no output
 should be done for that tag at all) or by the `set(tag, state = null)` method of the plugin that you wish to specifically not get logs for
@@ -162,35 +163,6 @@ To add a new plugin to the Yolog instance, call the `addPlugin(plugin)` method, 
 ## Notes
 
 Any undocumented features are either in development or working as intended but not yet fully tested or documented. Use with care.
-
-## License
-
-```text
-The MIT License (MIT)
-
-Copyright (c) 2019 Johannes Tegnér / Jitesoft / KRIGio AB
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
-
-Original version written by Johannes Tegnér 2014 using same MIT license.
-
 
 ### Versioning.
 
