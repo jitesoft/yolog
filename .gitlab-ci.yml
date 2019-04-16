@@ -23,7 +23,7 @@ build:
     - npm ci
   script:
     - npm run build:prod
-    - mv -r * dist/
+    - mv * dist/
   artifacts:
     when: on_success
     expire_in: 1 day
