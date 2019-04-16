@@ -3,7 +3,7 @@ export default class Plugin {
   static id = 0;
   #id = Plugin.id++;
 
-  get id() {
+  get id () {
     return this.#id;
   }
 
@@ -28,10 +28,7 @@ export default class Plugin {
    * @abstract
    */
   async log (tag, timestamp, message) {
-    throw {
-      name: 'InvalidMethodException',
-      message: 'This method is abstract and should not be called.'
-    };
+    throw new Error('This method is abstract and should not be called.');
   }
 
   /**
@@ -73,7 +70,6 @@ export default class Plugin {
     return Object.keys(this.#tags).filter(this.get.bind(this));
   }
 
-
   /**
    * Setter for plugin priority, depending on priority it will be invoked before or after other plugins.
    *
@@ -92,4 +88,3 @@ export default class Plugin {
     return this.#priority;
   }
 }
-

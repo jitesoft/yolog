@@ -169,7 +169,7 @@ export default class Yolog {
     }));
   };
 
-  //region Log methods.
+  // region Log methods.
 
   /**
    * Call a custom tag not already defined.
@@ -252,7 +252,7 @@ export default class Yolog {
     await this.#log('emergency', message, ...args);
   }
 
-  //endregion
+  // endregion
 }
 
 const logger = new Yolog();
