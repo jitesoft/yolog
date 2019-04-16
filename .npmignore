@@ -1,0 +1,8 @@
+*/**/.eslintrc.json
+*/**/.babelrc
+.gitlab-ci.yml
+.gitmodules
+tests
+plugins
+node_modules
+webpack.config.js

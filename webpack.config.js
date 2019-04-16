@@ -1,3 +1,4 @@
+/* eslint-disable */
 const getEnv = () => {
   return process.env.NODE_ENV === 'production' ? 'production' : 'development';
 };

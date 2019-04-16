@@ -1,3 +1,14 @@
+v 2.2.0
+ * Changed from `standard` package to `@jitesoft/eslint-config`.
+ * Fixed all lint errors.
+ * Updated build process to not create a new package file for the project (hence including the required packages).
+
+v 2.1.0
+ * Removed the node native `util` call from mixed-platform code.
+ * Added `@jitesoft/sprintf` dependency to take over for `util`.
+ * Updated to latest `@jitesoft/babel-preset-main`.
+ * Some minor fixes.
+
 v 2.0.0
  * Full re-write, moved package in under the @jitesoft org.
  * New Plugin system.
