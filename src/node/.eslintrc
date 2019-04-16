@@ -1,6 +1,4 @@
 {
-  "env": {
-    "node": true,
-    "browser": false
-  }
+  "parser": "babel-eslint",
+  "extends": "@jitesoft/eslint-config/node"
 }

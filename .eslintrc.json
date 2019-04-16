@@ -1,20 +1,5 @@
 {
   "root": true,
   "parser": "babel-eslint",
-  "extends": "semistandard",
-  "env": {
-    "shared-node-browser": true,
-    "es6": true,
-    "commonjs": true
-  },
-  "overrides": [
-    {
-      "files": [
-        "tests/*.test.js"
-      ],
-      "env": {
-        "jest": true
-      }
-    }
-  ]
+  "extends": "@jitesoft"
 }
