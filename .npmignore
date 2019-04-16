@@ -2,6 +2,7 @@
 */**/.babelrc
 .gitlab-ci.yml
 .gitmodules
+.gitignore
 tests
 plugins
 node_modules
