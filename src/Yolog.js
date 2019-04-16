@@ -142,7 +142,7 @@ export default class Yolog {
     }
   }
 
-  async #log (tag, message, ...args) {
+  #log = async (tag, message, ...args) => {
     if (tag in this.#tags && this.#tags[tag] === false) {
       return;
     }
@@ -167,7 +167,7 @@ export default class Yolog {
       timestamp: time,
       tag: tag
     }));
-  }
+  };
 
   //region Log methods.
 
