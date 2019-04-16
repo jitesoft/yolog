@@ -81,8 +81,9 @@ The pre-defined tags are (name and default value):
 }
 ```
 
-_All tag (methods) support the same placeholders as `console.log` or `util.format` would (`%s`, `%d` etc). Yolog uses the
-[@jitesoft/sprinf](https://www.npmjs.com/package/@jitesoft/sprintf) package to have the same functionality cross env._
+_Yolog uses the [@jitesoft/sprinf](https://www.npmjs.com/package/@jitesoft/sprintf) package to enable message and argument 
+building. This due to not wanting to use a node-specific method as `util.format` when building for cross env support.
+Be sure to check out supported parameter types if you wish to do some more advanced parameterization!_
 
 Turning a tag on or off is done by calling the `set(tag, state = null)` method on either the Yolog instance (if you wish that no output
 should be done for that tag at all) or by the `set(tag, state = null)` method of the plugin that you wish to specifically not get logs for
