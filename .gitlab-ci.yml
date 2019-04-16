@@ -10,7 +10,6 @@ test:
     BLUEBIRD_DEBUG: 0
   before_script:
     - npm ci
-    - npm audit
   script:
     - npm run test
 
