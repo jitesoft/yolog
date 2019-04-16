@@ -17,10 +17,6 @@ test:
   script:
     - npm run test
 
-dependencies:
-  extends: .dependency_scanning
-  stage: analyse
-
 build:
   stage: build
   image: jitesoft/node-base
