@@ -8,12 +8,15 @@ test:
   image: jitesoft/node-base
   variables:
     NODE_ENV: development
+    BLUEBIRD_DEBUG: 0
   before_script:
     - npm ci
   script:
     - npm run test
 
 build:
+  variables:
+    BLUEBIRD_DEBUG: 0
   stage: build
   image: jitesoft/node-base
   before_script:
