@@ -9,7 +9,7 @@ test:
   variables:
     NODE_ENV: development
   before_script:
-    - npm install
+    - npm ci
   script:
     - npm run test
 
@@ -17,16 +17,15 @@ build:
   stage: build
   image: jitesoft/node-base
   before_script:
-    - npm install
+    - npm ci
   script:
     - npm run build:prod
-    - mv dist/* ./
-    - rm -rf dist
+    - mv -r * dist/
   artifacts:
     when: on_success
     expire_in: 1 day
     paths:
-      - package
+      - /dist
   only:
     - tags
 
@@ -41,6 +40,7 @@ deploy:
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
     - npm whoami
   script:
+    - cp dist
     - npm config set git-tag-version false
     - npm version ${CI_COMMIT_TAG}
     - npm publish --access public
