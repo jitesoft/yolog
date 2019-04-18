@@ -32,7 +32,6 @@ describe('Tests for Yolog class.', () => {
     logger.addPlugin(plugin);
   });
 
-
   describe('Tests for Event handling.', () => {
     test('Test that `on` listens to log call.', async () => {
       const fn = jest.fn(e => true);
@@ -42,7 +41,6 @@ describe('Tests for Yolog class.', () => {
     });
 
     test('Test that `off` (using handle) removes the listener.', async () => {
-
       const fn = jest.fn(e => true);
       const id = logger.on('debug', fn);
       logger.off('debug', id);
@@ -66,7 +64,6 @@ describe('Tests for Yolog class.', () => {
       await logger.debug('Hi!');
       expect(fn).toHaveBeenCalledTimes(1);
     });
-
   });
 
   describe('Tests for get `active`', () => {
@@ -85,15 +82,15 @@ describe('Tests for Yolog class.', () => {
     test('All tags default to TRUE', () => {
       defaultTags.forEach((tag) => {
         expect(logger.get(tag)).toBe(true);
-      })
+      });
     });
 
     test('Setting tag to false will make only that tag false.', () => {
       logger.set('debug', false);
       let tag = '';
-      for (let i=0;i<defaultTags.length;i++) {
+      for (let i = 0; i < defaultTags.length; i++) {
         tag = defaultTags[i];
-        if (i===0) {
+        if (i === 0) {
           expect(logger.get(tag)).toBe(false);
         } else {
           expect(logger.get(tag)).toBe(true);
@@ -118,7 +115,7 @@ describe('Tests for Yolog class.', () => {
     });
 
     test('Setting non-existing tag will create tag.', () => {
-      expect(logger.get('abc')).toBe(undefined);
+      expect(logger.get('abc')).toBeUndefined();
       logger.set('abc', false);
       expect(logger.get('abc')).toBe(false);
     });
@@ -126,7 +123,7 @@ describe('Tests for Yolog class.', () => {
 
   describe('Tests for get `plugins`', () => {
     test('Current instance contains the plugin added in beforeEach.', () => {
-      expect(logger.plugins.length).toEqual(1);
+      expect(logger.plugins).toHaveLength(1);
       expect(logger.plugins).toEqual(expect.arrayContaining([plugin]));
     });
   });
@@ -141,7 +138,7 @@ describe('Tests for Yolog class.', () => {
       logger.addPlugin(plugin1);
       logger.addPlugin(plugin2);
 
-      expect(logger.plugins.length).toEqual(3);
+      expect(logger.plugins).toHaveLength(3);
     });
 
     test('Adding plugin calls all plugins.', async () => {
@@ -181,7 +178,7 @@ describe('Tests for Yolog class.', () => {
       expect(fn).toHaveBeenCalledTimes(1);
       expect(plugin.innerFunction).toHaveBeenCalledTimes(0);
       expect(fn).toHaveBeenCalledWith('weee', expect.any(Number), 'Abc hi');
-    })
+    });
   });
 
   describe('Tests for `removePlugin`', () => {
@@ -195,7 +192,6 @@ describe('Tests for Yolog class.', () => {
       logger.removePlugin(plugin);
       await logger.debug('Hi!');
       expect(plugin.innerFunction).toHaveBeenCalledTimes(0);
-    })
+    });
   });
-
 });

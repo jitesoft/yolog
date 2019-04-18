@@ -1,7 +1,6 @@
 import Plugin from '../src/Plugin';
 
 describe('Tests for plugin class.', () => {
-
   let plugin = null;
   const defaultTags = [
     'debug',
@@ -21,15 +20,15 @@ describe('Tests for plugin class.', () => {
     test('All tags default to TRUE', () => {
       defaultTags.forEach((tag) => {
         expect(plugin.get(tag)).toBe(true);
-      })
+      });
     });
 
     test('Setting tag to false will make only that tag false.', () => {
       plugin.set('debug', false);
       let tag = '';
-      for (let i=0;i<defaultTags.length;i++) {
+      for (let i = 0; i < defaultTags.length; i++) {
         tag = defaultTags[i];
-        if (i===0) {
+        if (i === 0) {
           expect(plugin.get(tag)).toBe(false);
         } else {
           expect(plugin.get(tag)).toBe(true);
@@ -54,7 +53,7 @@ describe('Tests for plugin class.', () => {
     });
 
     test('Setting non-existing tag will create tag.', () => {
-      expect(plugin.get('abc')).toBe(undefined);
+      expect(plugin.get('abc')).toBeUndefined();
       plugin.set('abc', false);
       expect(plugin.get('abc')).toBe(false);
     });
@@ -93,7 +92,5 @@ describe('Tests for plugin class.', () => {
       plugin.priority = 5;
       expect(plugin.priority).toEqual(5);
     });
-
   });
-
 });
