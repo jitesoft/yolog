@@ -1,3 +1,39 @@
 [submodule "plugins/file"]
 	path = plugins/file
 	url = git@gitlab.com:jitesoft/open-source/javascript/yolog-plugins/file.git
+[submodule "plugins/api"]
+	path = plugins/api
+	url = git@gitlab.com:jitesoft/open-source/javascript/yolog-plugins/api.git
+[submodule "plugins/email"]
+	path = plugins/email
+	url = git@gitlab.com:jitesoft/open-source/javascript/yolog-plugins/email.git
+[submodule "plugins/influx"]
+	path = plugins/influx
+	url = git@gitlab.com:jitesoft/open-source/javascript/yolog-plugins/influx.git
+[submodule "plugins/json"]
+	path = plugins/json
+	url = git@gitlab.com:jitesoft/open-source/javascript/yolog-plugins/json.git
+[submodule "plugins/logstash"]
+	path = plugins/logstash
+	url = git@gitlab.com:jitesoft/open-source/javascript/yolog-plugins/logstash.git
+[submodule "plugins/mongo"]
+	path = plugins/mongo
+	url = git@gitlab.com:jitesoft/open-source/javascript/yolog-plugins/mongo.git
+[submodule "plugins/mysql"]
+	path = plugins/mysql
+	url = git@gitlab.com:jitesoft/open-source/javascript/yolog-plugins/mysql.git
+[submodule "plugins/slack"]
+	path = plugins/slack
+	url = git@gitlab.com:jitesoft/open-source/javascript/yolog-plugins/slack.git
+[submodule "plugins/sqlite"]
+	path = plugins/sqlite
+	url = git@gitlab.com:jitesoft/open-source/javascript/yolog-plugins/sqlite.git
+[submodule "plugins/syslog"]
+	path = plugins/syslog
+	url = git@gitlab.com:jitesoft/open-source/javascript/yolog-plugins/syslog.git
+[submodule "plugins/websocket"]
+	path = plugins/websocket
+	url = git@gitlab.com:jitesoft/open-source/javascript/yolog-plugins/websocket.git
+[submodule "plugins/xml"]
+	path = plugins/xml
+	url = git@gitlab.com:jitesoft/open-source/javascript/yolog-plugins/xml.git
