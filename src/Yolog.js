@@ -159,7 +159,7 @@ export default class Yolog {
       return Promise.resolve();
     });
 
-    await Promise.all(promises);
+    await Promise.allSettled(promises);
 
     this.#eventHandler.emit(tag, new Event({
       message: message,
