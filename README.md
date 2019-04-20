@@ -1,6 +1,11 @@
 Yolog
 ==========
 
+![npm (scoped)](https://img.shields.io/npm/v/@jitesoft/yolog.svg)
+![David](https://img.shields.io/david/jitesoft/yolog.svg)
+![NPM](https://img.shields.io/npm/l/@jitesoft/yolog.svg)
+![npm](https://img.shields.io/npm/dt/@jitesoft/yolog.svg)
+
 Simple pluggable async logger for node and browser alike.  
 
 Ever wanted a logger with a simple API that you could easily write a minimal plugin for? A logger which would work in both
