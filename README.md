@@ -104,7 +104,14 @@ You can also check the state of a given tag by using the `get(tag)` method on ei
 ### As event handler
 
 The Yolog instance have a built-in event handler which can be used to listen to given tags instead of logging them
-with a plugin.  
+with a plugin.
+  
+_The events will not use the same priority queue as the normal callbacks, and will be async emitted, so do not
+build your logic around that expectation.  
+Each event should either return nothing or boolean value. If return value is `false` it will not bubble to the next
+queued priority batch, else they will run in batches depending on priority.  
+This also means that the callback could be async without the logger having any issues with it._
+
 There are `on`, `off` and `once` methods available and they work basically as any normal event handler should.
 
 The events emitted looks like the following:

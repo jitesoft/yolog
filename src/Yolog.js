@@ -159,14 +159,15 @@ export default class Yolog {
       return Promise.resolve();
     });
 
-    await Promise.allSettled(promises);
-
-    this.#eventHandler.emit(tag, new Event({
+    // Fire the events without waiting on the promises to resolve.
+    this.#eventHandler.emitAsync(tag, new Event({
       message: message,
       arguments: args,
       timestamp: time,
       tag: tag
-    }));
+    })).catch(() => { /* Should not happen. */ });
+
+    await Promise.allSettled(promises);
   };
 
   // region Log methods.
