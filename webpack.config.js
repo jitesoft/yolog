@@ -1,17 +1,8 @@
 /* eslint-disable */
-const getEnv = () => {
-  return process.env.NODE_ENV === 'production' ? 'production' : 'development';
-};
-
-console.log(getEnv());
-
 const Path = require('path');
 
 const common = {
-  mode: getEnv(),
-  optimization: {
-    minimize: getEnv() === 'production'
-  },
+  mode: process.env.NODE_ENV !== 'production' ? 'development' : 'production',
   module: {
     rules: [
       {
@@ -23,7 +14,7 @@ const common = {
   }
 };
 
-const index = Object.assign({
+const index = Object.assign({}, common, {
   entry: {
     'index': [
       Path.join(__dirname, 'src', 'Yolog.js')
@@ -31,11 +22,13 @@ const index = Object.assign({
   },
   output: {
     filename: 'index.js',
-    libraryTarget: 'commonjs'
+    libraryTarget: 'umd',
+    library: '@jitesoft/yolog',
+    globalObject: 'this',
   }
-}, common);
+});
 
-const node = Object.assign({
+const node = Object.assign({}, {
   entry: {
     'node': [
       Path.join(__dirname, 'src', 'node', 'index.js')
@@ -44,11 +37,13 @@ const node = Object.assign({
   target: 'node',
   output: {
     filename: 'node.js',
-    libraryTarget: 'commonjs'
+    libraryTarget: 'umd',
+    library: '@jitesoft/yolog',
+    globalObject: 'this'
   }
 }, common);
 
-const web = Object.assign({
+const web = Object.assign({}, common, {
   entry: {
     'browser': [
       Path.join(__dirname, 'src', 'web', 'index.js')
@@ -58,10 +53,10 @@ const web = Object.assign({
   output: {
     filename: 'browser.js',
     libraryTarget: 'umd',
-    library: 'Yolog'
+    library: '@jitesoft/yolog'
   }
-}, common);
+});
 
 module.exports = [
-  index, web, node
+  index, node, web
 ];
