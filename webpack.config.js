@@ -3,6 +3,10 @@ const Path = require('path');
 
 const common = {
   mode: process.env.NODE_ENV !== 'production' ? 'development' : 'production',
+  externals: {
+    "@jitesoft/sprintf": "@jitesoft/sprintf",
+    "@jitesoft/events": "@jitesoft/events"
+  },
   module: {
     rules: [
       {

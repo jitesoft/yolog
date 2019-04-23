@@ -1,17 +1,5 @@
 {
   "presets": [
     "@jitesoft/main"
-  ],
-  "env": {
-    "test": {
-      "presets": [
-        [
-          "@jitesoft/main",
-          {
-            "modules": "commonjs"
-          }
-        ]
-      ]
-    }
-  }
+  ]
 }
