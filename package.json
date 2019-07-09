@@ -58,7 +58,7 @@
         "webpack-cli": "^3.3.5"
     },
     "scripts": {
-        "test": "eslint src/ tests/ && jest ./tests/",
+        "test": "eslint src/ tests/ && jest yolog/tests/ && npm audit",
         "build:prod": "cross-env NODE_ENV=production webpack -p",
         "build:dev": "cross-env NODE_ENV=develop webpack"
     }
