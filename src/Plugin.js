@@ -1,6 +1,7 @@
 /** @abstract */
 export default class Plugin {
   static id = 0;
+
   #id = Plugin.id++;
 
   get id () {
@@ -8,14 +9,15 @@ export default class Plugin {
   }
 
   #priority = 0;
+
   #tags = {
-    'debug': true,
-    'info': true,
-    'warning': true,
-    'error': true,
-    'critical': true,
-    'alert': true,
-    'emergency': true
+    debug: true,
+    info: true,
+    warning: true,
+    error: true,
+    critical: true,
+    alert: true,
+    emergency: true
   };
 
   /**

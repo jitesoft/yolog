@@ -9,19 +9,22 @@ import sprintf from '@jitesoft/sprintf';
  */
 export default class Yolog {
   #eventHandler;
+
   /** @type {Array<Plugin>} */
   #plugins;
+
   /** @type {Object} */
   #tags;
 
   #timestamp = () => {
     return (new Date()).getTime();
   };
+
   #formatter = (message, ...args) => {
     return sprintf(message, ...args);
   };
 
-  constructor (plugins = [], tags = { 'debug': true, 'info': true, 'warning': true, 'error': true, 'critical': true, 'alert': true, 'emergency': true }) {
+  constructor (plugins = [], tags = { debug: true, info: true, warning: true, error: true, critical: true, alert: true, emergency: true }) {
     this.#eventHandler = new EventHandler();
     this.#tags = tags;
     this.#plugins = plugins;

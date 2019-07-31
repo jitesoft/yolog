@@ -10,6 +10,7 @@ export default class ConsolePlugin extends Plugin {
     debug: { call: 'stdout', color: '0;34' },
     info: { call: 'stdout', color: '0;37' }
   };
+
   #nl = process.platform === 'win32' ? '\r\n' : '\n';
 
   async log (tag, timestamp, message) {
