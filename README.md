@@ -1,9 +1,7 @@
 Yolog
 
-![npm (scoped)](https://img.shields.io/npm/v/@jitesoft/yolog.svg)
 [![Known Vulnerabilities](https://dev.snyk.io/test/npm/@jitesoft/yolog/badge.svg)](https://dev.snyk.io/test/npm/@jitesoft/yolog)
 [![pipeline status](https://gitlab.com/jitesoft/open-source/javascript/yolog/badges/master/pipeline.svg)](https://gitlab.com/jitesoft/open-source/javascript/yolog/commits/master)
-![David](https://img.shields.io/david/jitesoft/yolog.svg)
 [![coverage report](https://gitlab.com/jitesoft/open-source/javascript/yolog/badges/master/coverage.svg)](https://gitlab.com/jitesoft/open-source/javascript/yolog/commits/master)
 [![npm](https://img.shields.io/npm/dt/@jitesoft/yolog)](https://www.npmjs.com/package/@jitesoft/yolog)
 [![Back project](https://img.shields.io/badge/Open%20Collective-Tip%20the%20devs!-blue.svg)](https://opencollective.com/jitesoft-open-source)
