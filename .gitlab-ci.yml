@@ -7,7 +7,6 @@ test:
   image: jitesoft/node-base
   variables:
     NODE_ENV: development
-    BLUEBIRD_DEBUG: 0
   before_script:
     - npm ci
   script:
@@ -18,7 +17,6 @@ deploy:
   image: jitesoft/node-base:latest
   variables:
     NODE_ENV: development
-    BLUEBIRD_DEBUG: 0
   before_script:
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
     - npm whoami
