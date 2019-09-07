@@ -39,14 +39,14 @@
         ]
     },
     "dependencies": {
-        "@jitesoft/events": "^1.3.7",
-        "@jitesoft/sprintf": "^0.0.15"
+        "@jitesoft/events": "^1.3.8",
+        "@jitesoft/sprintf": "^0.0.16"
     },
     "devDependencies": {
-        "@babel/core": "^7.5.5",
-        "@babel/runtime-corejs3": "^7.5.5",
-        "@jitesoft/babel-preset-main": "^1.5.0",
-        "@jitesoft/eslint-config": "^1.4.0",
+        "@babel/core": "^7.6.0",
+        "@babel/runtime-corejs3": "^7.6.0",
+        "@jitesoft/babel-preset-main": "^1.6.0",
+        "@jitesoft/eslint-config": "^1.6.0",
         "babel-eslint": "^10.0.3",
         "babel-jest": "^24.9.0",
         "babel-loader": "^8.0.6",
@@ -55,7 +55,7 @@
         "eslint": "^6.3.0",
         "jest": "^24.9.0",
         "webpack": "^4.39.3",
-        "webpack-cli": "^3.3.7"
+        "webpack-cli": "^3.3.8"
     },
     "scripts": {
         "test": "eslint src/ tests/ && jest yolog/tests/ && npm audit",
