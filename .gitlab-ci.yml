@@ -32,4 +32,4 @@ include:
   - https://gitlab.com/jitesoft/gitlab-ci-lib/raw/master/dependency_scanning.yml
 
 scan:
-  extends: .dependency_scan:npm
+  extends: .scan:npm
