@@ -118,12 +118,13 @@ There are `on`, `off` and `once` methods available and they work basically as an
 The events emitted looks like the following:
 
 ```js
-event = {
+const event = {
   data: {
     message: "message" /* Message passed to the logger. */,
     arguments: [ /* argument list passed to the logger. */ ],
     timestamp: 123 /* Unix-timestamp (ms) when the logger was invoked. */, 
-    tag: "tag" /* The tag that was invoked. */
+    tag: "tag" /* The tag that was invoked. */,
+    errorObject: new Error() /* An error object created in the yolog #log method. */
   }
 };
 
@@ -147,12 +148,13 @@ export default class MyPlugin extends Plugin {
   /**
    * Method called when a log message is intercepted and the plugin is listening to the given tag.
    *
-   * @param {String} tag Tag which was used when logging the message.
+   * @param {String} tag       Tag which was used when logging the message.
    * @param {Number} timestamp Timestamp (in ms) when the log was intercepted by the Yolog instance.
-   * @param {String} message
+   * @param {String} message   Message that is passed to the plugin.
+   * @param {Error} error      Error generated in the logger to be possible to use for call stack or for other reasons.
    * @return Promise<void>
    */
-  async log (tag, timestamp, message) {
+  async log (tag, timestamp, message, error) {
     // Do your magic here! (return a promise or use the async/await keywords!)
     return await something.something(message);
   }  
@@ -163,7 +165,7 @@ Plugin interface:
 
 ```typescript
 interface PluginInterface {
-  log (tag: string, timestamp: number, message: string): Promise<void>; /*Abstract, only method required to be implementd. */
+  log (tag: string, timestamp: number, message: string, error): Promise<void>; /*Abstract, only method required to be implemented. */
   set (tag: string, state: boolean|null): void;
   get (tag: string): boolean|undefined;
   /*get*/ active (): Array<string>;

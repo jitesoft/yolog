@@ -1,3 +1,9 @@
+v 2.3.0
+ * Introduced a new parameter (error) for plugins.
+ * Introduced new property (errorObject) on event.
+ * Yolog will now generate an error object in its #log function which will be passed to plugins and events.
+ * Marked #formatter method as `async` for future (possible) plans.
+
 v 2.2.0
  * Changed from `standard` package to `@jitesoft/eslint-config`.
  * Fixed all lint errors.

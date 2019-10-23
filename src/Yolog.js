@@ -20,8 +20,8 @@ export default class Yolog {
     return (new Date()).getTime();
   };
 
-  #formatter = (message, ...args) => {
-    return sprintf(message, ...args);
+  #formatter = async (message, ...args) => {
+    return Promise.resolve(sprintf(message, ...args));
   };
 
   constructor (plugins = [], tags = { debug: true, info: true, warning: true, error: true, critical: true, alert: true, emergency: true }) {
@@ -146,14 +146,14 @@ export default class Yolog {
   }
 
   #log = async (tag, message, ...args) => {
-    const error = new Error();
     if (tag in this.#tags && this.#tags[tag] === false) {
       return;
     }
 
     if (!!args && args.length > 0) {
-      message = this.#formatter(message, ...args);
+      message = await this.#formatter(message, ...args);
     }
+    const error = new Error(message);
 
     const time = this.#timestamp();
     const promises = this.#plugins.map((plugin) => {
