@@ -7,8 +7,8 @@ class TestPlugin extends Plugin {
     this.innerFunction = inner ?? jest.fn();
   }
 
-  async log (tag, timestamp, message) {
-    this.innerFunction(tag, timestamp, message);
+  async log (...args) {
+    this.innerFunction(...args);
     return Promise.resolve();
   }
 }
@@ -150,8 +150,8 @@ describe('Tests for Yolog class.', () => {
 
       expect(fn).toHaveBeenCalledTimes(1);
       expect(plugin.innerFunction).toHaveBeenCalledTimes(1);
-      expect(fn).toHaveBeenCalledWith('debug', expect.any(Number), 'Abc hi');
-      expect(plugin.innerFunction).toHaveBeenCalledWith('debug', expect.any(Number), 'Abc hi');
+      expect(fn).toHaveBeenCalledWith('debug', expect.any(Number), 'Abc hi', expect.any(Error));
+      expect(plugin.innerFunction).toHaveBeenCalledWith('debug', expect.any(Number), 'Abc hi', expect.any(Error));
     });
 
     test('Only plugin with active tag to be called.', async () => {
@@ -164,7 +164,7 @@ describe('Tests for Yolog class.', () => {
 
       expect(fn).toHaveBeenCalledTimes(1);
       expect(plugin.innerFunction).toHaveBeenCalledTimes(0);
-      expect(fn).toHaveBeenCalledWith('debug', expect.any(Number), 'Abc hi');
+      expect(fn).toHaveBeenCalledWith('debug', expect.any(Number), 'Abc hi', expect.any(Error));
     });
 
     test('Custom tag is called in plugin.', async () => {
@@ -177,7 +177,7 @@ describe('Tests for Yolog class.', () => {
 
       expect(fn).toHaveBeenCalledTimes(1);
       expect(plugin.innerFunction).toHaveBeenCalledTimes(0);
-      expect(fn).toHaveBeenCalledWith('weee', expect.any(Number), 'Abc hi');
+      expect(fn).toHaveBeenCalledWith('weee', expect.any(Number), 'Abc hi', expect.any(Error));
     });
   });
 

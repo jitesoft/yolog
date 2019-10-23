@@ -146,6 +146,7 @@ export default class Yolog {
   }
 
   #log = async (tag, message, ...args) => {
+    const error = new Error();
     if (tag in this.#tags && this.#tags[tag] === false) {
       return;
     }
@@ -157,7 +158,7 @@ export default class Yolog {
     const time = this.#timestamp();
     const promises = this.#plugins.map((plugin) => {
       if (plugin.get(tag) === true) {
-        return plugin.log(tag, time, message);
+        return plugin.log(tag, time, message, error);
       }
       return Promise.resolve();
     });
@@ -167,7 +168,8 @@ export default class Yolog {
       message: message,
       arguments: args,
       timestamp: time,
-      tag: tag
+      tag: tag,
+      errorObject: error
     })).catch(() => { /* Should not happen. */ });
 
     await Promise.allSettled(promises);

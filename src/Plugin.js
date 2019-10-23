@@ -25,11 +25,12 @@ export default class Plugin {
    *
    * @param {String} tag Tag which was used when logging the message.
    * @param {Number} timestamp Timestamp (in ms) when the log was intercepted by the Yolog instance.
-   * @param {String} message
+   * @param {String} message Message that is passed to the plugin.
+   * @param {Error} error Error generated in the logger to be possible to use for call stack or for other reasons.
    * @return Promise<void>
    * @abstract
    */
-  async log (tag, timestamp, message) {
+  async log (tag, timestamp, message, error) {
     throw new Error('This method is abstract and should not be called.');
   }
 
