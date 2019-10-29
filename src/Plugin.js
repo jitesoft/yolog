@@ -31,6 +31,7 @@ export default class Plugin {
    * @abstract
    */
   async log (tag, timestamp, message, error) {
+    /* istanbul ignore next */
     throw new Error('This method is abstract and should not be called.');
   }
 
