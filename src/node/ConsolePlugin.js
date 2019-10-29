@@ -13,7 +13,7 @@ export default class ConsolePlugin extends Plugin {
 
   #nl = process.platform === 'win32' ? '\r\n' : '\n';
 
-  async log (tag, timestamp, message) {
+  async log (tag, timestamp, message, _) {
     await new Promise((resolve, reject) => {
       process[this.#colors[tag].call].write(
         `\u001b[${this.#colors[tag].color}m[${tag.toUpperCase()}] ` +
