@@ -1,4 +1,5 @@
-Yolog
+# Yolog
+
 
 [![npm (scoped)](https://img.shields.io/npm/v/@jitesoft/yolog)](https://www.npmjs.com/package/@jitesoft/yolog)
 [![Known Vulnerabilities](https://dev.snyk.io/test/npm/@jitesoft/yolog/badge.svg)](https://dev.snyk.io/test/npm/@jitesoft/yolog)
@@ -69,7 +70,7 @@ const logger = require('@jitesoft/yolog/node');    // Node specific
 logger.debug('Weee!')
 ```
 
-## Log tags
+### Log tags
 
 The Yolog class have a set of pre-defined tags which are used to output different type of loggs with. It is possible to turn a 
 tag on and off via code, both in a plugin or in the Yolog instance itself.  
@@ -176,7 +177,7 @@ interface PluginInterface {
 
 To add a new plugin to the Yolog instance, call the `addPlugin(plugin)` method, removal can be done with `removePlugin(plugin)`.
 
-## Notes
+### Notes
 
 Any undocumented features are either in development or working as intended but not yet fully tested or documented. Use with care.
 
@@ -185,3 +186,25 @@ Any undocumented features are either in development or working as intended but n
 Yolog follows the [Semantic Versioning 2.0.0](http://semver.org/)  
 This basically means that no API breaking changes will occur without a new major version release, features might be added
 during a minor release and patches are only fixes.
+
+## Official plugins
+
+The following list are plugins maintained and supported by Jitesoft.
+
+* [`@jitesoft/yolog-file-plugin`](https://www.npmjs.com/package/@jitesoft/yolog-file-plugin)
+* [`@jitesoft/yolog-sentry-plugin`](https://www.npmjs.com/package/@jitesoft/yolog-sentry-plugin)
+* [`@jitesoft/yolog-slack-plugin`](https://www.npmjs.com/package/@jitesoft/yolog-slack-plugin)
+* [`@jitesoft/yolog-email-plugin`](https://www.npmjs.com/package/@jitesoft/yolog-email-plugin)
+
+_More are under development._
+
+## Community developed plugins
+
+_Create a pull request for the readme file to include your plugin here (after a general audit)!_
+
+---
+
+**Observe:**  
+Community developed plugins listed here are not under the control of Jitesoft and any damages they may or may not cause
+is nothing that Jitesoft can be held liable for. As with everything, you should always audit the code you use before
+using it in production!
