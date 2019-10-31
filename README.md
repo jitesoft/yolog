@@ -1,4 +1,4 @@
-Yolog
+# Yolog
 
 [![npm (scoped)](https://img.shields.io/npm/v/@jitesoft/yolog)](https://www.npmjs.com/package/@jitesoft/yolog)
 [![Known Vulnerabilities](https://dev.snyk.io/test/npm/@jitesoft/yolog/badge.svg)](https://dev.snyk.io/test/npm/@jitesoft/yolog)
