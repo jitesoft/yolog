@@ -32,6 +32,17 @@ describe('Tests for Yolog class.', () => {
     logger.addPlugin(plugin);
   });
 
+  describe('Test built-in tags.', () => {
+    test('Test all tags.', async () => {
+      for (let i = 0; i < defaultTags.length; i++) {
+        await logger[defaultTags[i]]('Test %s', defaultTags[i]);
+        expect(plugin.innerFunction).toHaveBeenNthCalledWith(i + 1, defaultTags[i], expect.any(Number), `Test ${defaultTags[i]}`, expect.any(Error));
+      }
+
+      expect(plugin.innerFunction).toHaveBeenCalledTimes(defaultTags.length);
+    });
+  });
+
   describe('Tests for Event handling.', () => {
     test('Test that `on` listens to log call.', async () => {
       const fn = jest.fn(e => true);
@@ -79,6 +90,23 @@ describe('Tests for Yolog class.', () => {
   });
 
   describe('Tests for `set` and `get`', () => {
+    test('Available returns an array of available tags.', () => {
+      expect(logger.available).toEqual(defaultTags);
+      logger.set('test-tEST', true);
+      const arr = defaultTags.slice();
+      arr.push('test-test');
+      expect(logger.available).toEqual(arr);
+    });
+
+    test('Inactivating tag will not pass value to plugins.', async () => {
+      await logger.debug('abc');
+      logger.set('debug', false);
+      await logger.debug('hej hej!');
+
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(1, 'debug', expect.any(Number), 'abc', expect.any(Error));
+      expect(plugin.innerFunction).toHaveBeenCalledTimes(1);
+    });
+
     test('All tags default to TRUE', () => {
       defaultTags.forEach((tag) => {
         expect(logger.get(tag)).toBe(true);
@@ -118,6 +146,14 @@ describe('Tests for Yolog class.', () => {
       expect(logger.get('abc')).toBeUndefined();
       logger.set('abc', false);
       expect(logger.get('abc')).toBe(false);
+    });
+  });
+
+  describe('Timestamp tests', () => {
+    test('Setting timestamp changes output value.', async () => {
+      logger.setTimestampFunction(() => 123);
+      await logger.debug('abc');
+      expect(plugin.innerFunction).toHaveBeenCalledWith('debug', 123, 'abc', expect.any(Error));
     });
   });
 
