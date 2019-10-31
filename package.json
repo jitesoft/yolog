@@ -28,9 +28,10 @@
     "bugs": {
         "url": "https://gitlab.com/jitesoft/open-source/javascript/yolog/issues"
     },
+    "homepage": "https://yolog.js.org",
     "repository": {
         "type": "git",
-        "url": "https://gitlab.com/jitesoft/open-source/javascript/yolog"
+        "url": "https://github.com/jitesoft/yolog"
     },
     "jest": {
         "collectCoverage": true,
@@ -60,6 +61,6 @@
     "scripts": {
         "test": "eslint src/ tests/ && jest yolog/tests/ && npm audit",
         "build:prod": "cross-env NODE_ENV=production webpack -p",
-        "build:dev": "cross-env NODE_ENV=develop webpack"
+        "build:dev": "cross-env NODE_ENV=development webpack"
     }
 }
