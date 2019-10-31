@@ -28,9 +28,10 @@
     "bugs": {
         "url": "https://gitlab.com/jitesoft/open-source/javascript/yolog/issues"
     },
+    "homepage": "https://yolog.js.org",
     "repository": {
         "type": "git",
-        "url": "https://gitlab.com/jitesoft/open-source/javascript/yolog"
+        "url": "https://github.com/jitesoft/yolog"
     },
     "jest": {
         "collectCoverage": true,
