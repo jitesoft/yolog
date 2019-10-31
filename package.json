@@ -61,6 +61,6 @@
     "scripts": {
         "test": "eslint src/ tests/ && jest yolog/tests/ && npm audit",
         "build:prod": "cross-env NODE_ENV=production webpack -p",
-        "build:dev": "cross-env NODE_ENV=develop webpack"
+        "build:dev": "cross-env NODE_ENV=development webpack"
     }
 }
