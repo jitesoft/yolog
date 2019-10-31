@@ -1,6 +1,5 @@
 # Yolog
 
-
 [![npm (scoped)](https://img.shields.io/npm/v/@jitesoft/yolog)](https://www.npmjs.com/package/@jitesoft/yolog)
 [![Known Vulnerabilities](https://dev.snyk.io/test/npm/@jitesoft/yolog/badge.svg)](https://dev.snyk.io/test/npm/@jitesoft/yolog)
 [![pipeline status](https://gitlab.com/jitesoft/open-source/javascript/yolog/badges/master/pipeline.svg)](https://gitlab.com/jitesoft/open-source/javascript/yolog/commits/master)
@@ -208,3 +207,7 @@ _Create a pull request for the readme file to include your plugin here (after a 
 Community developed plugins listed here are not under the control of Jitesoft and any damages they may or may not cause
 is nothing that Jitesoft can be held liable for. As with everything, you should always audit the code you use before
 using it in production!
+
+### Source code
+
+The source can be found at [GitHub](https://github.com/jitesoft/yolog) and [GitLab](https://gitlab.com/jitesoft/open-source/javascript/yolog).
