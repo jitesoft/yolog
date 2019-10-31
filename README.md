@@ -210,4 +210,4 @@ using it in production!
 
 ### Source code
 
-The source can be found at [GitHub](https://github.com/jitesoft/yolog) and [GitLab](https://github.com/jitesoft/open-source/javascript/yolog).
+The source can be found at [GitHub](https://github.com/jitesoft/yolog) and [GitLab](https://gitlab.com/jitesoft/open-source/javascript/yolog).
