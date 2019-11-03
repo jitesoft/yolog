@@ -42,9 +42,11 @@ export default class Plugin {
    *
    * @param {String} tag
    * @param {Boolean} [state]
+   * @return {Plugin} Self.
    */
   set (tag, state = null) {
     this.#tags[tag.toLowerCase()] = state !== null ? state : !this.get(tag);
+    return this;
   }
 
   /**
