@@ -176,17 +176,7 @@ interface PluginInterface {
 
 To add a new plugin to the Yolog instance, call the `addPlugin(plugin)` method, removal can be done with `removePlugin(plugin)`.
 
-### Notes
-
-Any undocumented features are either in development or working as intended but not yet fully tested or documented. Use with care.
-
-### Versioning.
-
-Yolog follows the [Semantic Versioning 2.0.0](http://semver.org/)  
-This basically means that no API breaking changes will occur without a new major version release, features might be added
-during a minor release and patches are only fixes.
-
-## Official plugins
+### Official plugins
 
 The following list are plugins maintained and supported by Jitesoft.
 
@@ -197,22 +187,134 @@ The following list are plugins maintained and supported by Jitesoft.
 
 _More are under development._
 
-## Community developed plugins
+### Community developed plugins
 
 _Create a pull request for the readme file to include your plugin here (after a general audit)!_
-
----
 
 **Observe:**  
 Community developed plugins listed here are not under the control of Jitesoft and any damages they may or may not cause
 is nothing that Jitesoft can be held liable for. As with everything, you should always audit the code you use before
 using it in production!
 
-#### Source code
+## Base API
+
+The Yolog base API is quite simple, there are a few methods to customize the logger, while most of the configurations should
+be done in plugins.  
+
+**Events**
+
+As mentioned above, the Yolog instance can be used as an event handler, the methods connected to this features
+are the following:
+
+```typescript
+interface Yolog {
+    on(tag: string, handler: Function, priority: number): number;
+    off(tag: string, handler: number | Function): boolean;
+    once(tag: string, handler: Function, priority?: number): number;
+}
+```
+
+The methods pretty much speak for themselves. On and Once both returns a number, the number
+is the handle of the specific handler function. If the handler is to be removed, the handle 
+or the function itself can be passed to yolog through the `off` method, removing it from the list of handlers.
+
+Priority is a batch priority, that is, if multiple handlers have the same priority, they will be called
+async at the same time. If either of them returns false, the event will not bubble to the next batch.  
+There is currently no built in way to not allow other handlers with the same priority to stop each other.
+
+Events start their emit before the plugins are invoked, but yolog will not wait for them to finnish before starting
+to run the plugins. That way, you can not be sure that the plugins are invoked before the plugins, or the other way around.
+
+**Plugins**
+
+Adding and removing plugins is if possible more easy than using the events. The following methods are
+used for this:
+
+```typescript
+interface Yolog {
+    addPlugin(plugin: Plugin): Yolog;
+    removePlugin(plugin: Plugin): Yolog;
+    readonly plugins: Plugin[];
+}
+```
+
+Plugins are all called in batch when a log command is done, they have no priority over each other and 
+the promise of the log method called will resolve when all are done.
+
+The getter `plugins` will return all the plugins that are loaded in the instance.
+
+**Tags**
+
+Tags is quite an important thing in yolog (and most logging...), there are a few pre-defined tags and methods
+that are used to invoke those. The predefined tags are:
+
+```javascript
+[
+  'debug',
+  'info',
+  'warning',
+  'error',
+  'critical',
+  'alert',
+  'emergency'
+]
+```
+
+You may call a specific log tag via the `tagName(message: string, ...args): Promise<void>` methods, and if you wish to use
+a custom tag, the `custom(tag: string, message: string, ...args): Promise<void>` method is available.  
+Just make sure that the tag exists in the logger by adding it in the `set` method!
+
+```typescript
+interface Yolog {
+    set(tag: string, state?: boolean): Yolog;
+    get(tag: string): boolean;
+}
+```
+
+The `set` method adds a tag or updates existing tags states, if it's set to `true` the tag will be available in yolog, if false, it will not
+this way you can globally configure some tags to be on or off, if they are off, no event nor plugin will be invoked when the
+method is used.  
+`get` will return `true` or `false` depending on the state of the tag.
+
+An example of where this can be a useful feature is when you wish to use environment specific tags:
+
+```javascript
+if (process.env.NODE_ENV === 'production') {
+  yolog.set('debug', false);
+  yolog.set('emergency', true);
+}
+```
+
+**Active and available**
+
+There are two getters which can be used to get information about active and available tags, they both return
+lists of strings (the name of the tag) and are readonly:
+
+```typescript
+interface Yolog {
+    readonly available: string[];
+    readonly active: string[];
+}
+```
+
+The `available` getter will return the names of all tags that are set in yolog, this includes all custom tags you have created.
+The `active` getter will return the names of all the tags that have state set to `true`.
+
+## Notes
+
+Any undocumented features are either in development or working as intended but not yet fully tested or documented. Use with care.
+
+### Versioning.
+
+Yolog follows the [Semantic Versioning 2.0.0](http://semver.org/)  
+This basically means that no API breaking changes will occur without a new major version release, features might be added
+during a minor release and patches are only fixes.
+
+### Source code
 
 The source can be found at [GitHub](https://github.com/jitesoft/yolog) and [GitLab](https://gitlab.com/jitesoft/open-source/javascript/yolog).
 
-#### Tiny bit of history, cause why not?
+### Tiny bit of history, cause why not?
 
 First release of `yolog` (back then under the name of `node-yolog`) was back in 2013, so quite a while ago... It was developed as a tiny in-house
 logger - by Johannes at Talkative Labs - just to add colours to console logs. So nothing great nor special, although it did make the console look better!  
