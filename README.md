@@ -71,19 +71,19 @@ logger.debug('Weee!')
 
 ### Log tags
 
-The Yolog class have a set of pre-defined tags which are used to output different type of loggs with. It is possible to turn a 
+The Yolog class have a set of pre-defined tags which are used to output different type of logs with. It is possible to turn a 
 tag on and off via code, both in a plugin or in the Yolog instance itself.  
 The pre-defined tags are (name and default value):
 
 ```json
 {
-    "debug": true,
-    "info": true,
-    "warning": true,
-    "error": true,
-    "critical": true,
-    "alert": true,
-    "emergency": true
+  "debug": true,
+  "info": true,
+  "warning": true,
+  "error": true,
+  "critical": true,
+  "alert": true,
+  "emergency": true
 }
 ```
 
@@ -196,7 +196,9 @@ Community developed plugins listed here are not under the control of Jitesoft an
 is nothing that Jitesoft can be held liable for. As with everything, you should always audit the code you use before
 using it in production!
 
-## Base API
+## More docs!
+
+### Yolog
 
 The Yolog base API is quite simple, there are a few methods to customize the logger, while most of the configurations should
 be done in plugins.  
@@ -208,9 +210,9 @@ are the following:
 
 ```typescript
 interface Yolog {
-    on(tag: string, handler: Function, priority: number): number;
-    off(tag: string, handler: number | Function): boolean;
-    once(tag: string, handler: Function, priority?: number): number;
+  on(tag: string, handler: Function, priority: number): number;
+  off(tag: string, handler: number | Function): boolean;
+  once(tag: string, handler: Function, priority?: number): number;
 }
 ```
 
@@ -232,9 +234,9 @@ used for this:
 
 ```typescript
 interface Yolog {
-    addPlugin(plugin: Plugin): Yolog;
-    removePlugin(plugin: Plugin): Yolog;
-    readonly plugins: Plugin[];
+  addPlugin(plugin: Plugin): Yolog;
+  removePlugin(plugin: Plugin): Yolog;
+  readonly plugins: Plugin[];
 }
 ```
 
@@ -249,7 +251,7 @@ Tags is quite an important thing in yolog (and most logging...), there are a few
 that are used to invoke those. The predefined tags are:
 
 ```javascript
-[
+const tags = [
   'debug',
   'info',
   'warning',
@@ -257,7 +259,7 @@ that are used to invoke those. The predefined tags are:
   'critical',
   'alert',
   'emergency'
-]
+];
 ```
 
 You may call a specific log tag via the `tagName(message: string, ...args): Promise<void>` methods, and if you wish to use
@@ -266,8 +268,8 @@ Just make sure that the tag exists in the logger by adding it in the `set` metho
 
 ```typescript
 interface Yolog {
-    set(tag: string, state?: boolean): Yolog;
-    get(tag: string): boolean;
+  set(tag: string, state?: boolean): Yolog;
+  get(tag: string): boolean;
 }
 ```
 
@@ -292,13 +294,52 @@ lists of strings (the name of the tag) and are readonly:
 
 ```typescript
 interface Yolog {
-    readonly available: string[];
-    readonly active: string[];
+  readonly available: string[];
+  readonly active: string[];
 }
 ```
 
 The `available` getter will return the names of all tags that are set in yolog, this includes all custom tags you have created.
 The `active` getter will return the names of all the tags that have state set to `true`.
+
+### Plugin
+
+Just as with the base API, the plugins have their own `tags` to turn off and on! This is to make it possible to have specific 
+loggin types on for some tags while others are not. For example: you might want to output `debug` to console and 
+you wish to use an email plugin for the `critical` logs.  
+If it was not possible to turn off most tags for the email plugin, you would receive a new email for each debug log made. 
+
+**Active and available**
+
+The `available` and `active` getters works as with the yolog class, the first returns all tags that are available in the plugin,
+the `active` returns which are turned on.
+
+```typescript
+interface Plugin {
+  readonly available: string[];
+  readonly active: string[];
+}
+```
+
+**Set and Get**
+
+The set and get methods are - just as with the Yolog class - used to turn tags on and off and to check if a given tag is on or off.   
+Calling `set` will create a new tag if none exist, else update it.  
+
+**log**
+
+The log method is the most important function of the Plugins. It is basically the only method that is required to be implemented to create a new plugin.
+`log` is an async method which takes a tag, timestamp, message and error. The message is the formatted message that Yolog passes
+to all plugins. The tag is the tag that was used when the log call was made. Timestamp is intended to be a Unix timestamp, which
+can be used inside the plugin to format a nice time string for output.  
+
+Since v 2.6.0 a new `Error` argument is passed as the last argument of the log method. It can be used to output the callstack or similar
+information.
+
+**Priority**
+
+The `priority` getter and setter have been deprecated since v 2.6.3 and will be removed in v 3.x. It has no usage as of now, due to the
+fact that Yolog calls all the plugins asynchronously (making priority nil).
 
 ## Notes
 
@@ -321,3 +362,11 @@ logger - by Johannes at Talkative Labs - just to add colours to console logs. So
 After the initial release, the work on the package went stale for quite a while, like... years!  
 It was finally picked up again in 2018 and rebuilt and re-branded as `yolog` under the `@jitesoft` org. The new version was not only for colourful
 console outputs, but rather a small plugin system for logging with a basic API which was easy to use and extend.  
+
+### Development & Contributions
+
+Contributions in any form are very welcome!   
+Issues (bugs, feature requests, questions etc etc) can be posted in the [GitHub issue tracker](https://github.com/jitesoft/yolog/issues).  
+Pull requests will be reviewed and should contain tests and follow the code style.
+
+If you wish to contribute by monetary means, feel free to click the `sponsor` button on GitHub or head on over to our [OpenCollective](https://opencollective.com/jitesoft-open-source) page!
