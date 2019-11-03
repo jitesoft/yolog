@@ -211,3 +211,11 @@ using it in production!
 #### Source code
 
 The source can be found at [GitHub](https://github.com/jitesoft/yolog) and [GitLab](https://gitlab.com/jitesoft/open-source/javascript/yolog).
+
+#### Tiny bit of history, cause why not?
+
+First release of `yolog` (back then under the name of `node-yolog`) was back in 2013, so quite a while ago... It was developed as a tiny in-house
+logger - by Johannes at Talkative Labs - just to add colours to console logs. So nothing great nor special, although it did make the console look better!  
+After the initial release, the work on the package went stale for quite a while, like... years!  
+It was finally picked up again in 2018 and rebuilt and re-branded as `yolog` under the `@jitesoft` org. The new version was not only for colourful
+console outputs, but rather a small plugin system for logging with a basic API which was easy to use and extend.  
