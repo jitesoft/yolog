@@ -8,6 +8,7 @@ export default class Plugin {
     return this.#id;
   }
 
+  /** @deprecated */
   #priority = 0;
 
   #tags = {
@@ -41,9 +42,11 @@ export default class Plugin {
    *
    * @param {String} tag
    * @param {Boolean} [state]
+   * @return {Plugin} Self.
    */
   set (tag, state = null) {
     this.#tags[tag.toLowerCase()] = state !== null ? state : !this.get(tag);
+    return this;
   }
 
   /**
@@ -78,6 +81,7 @@ export default class Plugin {
    * Setter for plugin priority, depending on priority it will be invoked before or after other plugins.
    *
    * @param value
+   * @deprecated
    */
   set priority (value) {
     this.#priority = value;
@@ -87,6 +91,7 @@ export default class Plugin {
    * Getter to fetch the plugin priority, depending on priority, it will be invoked before or after other plugins.
    *
    * @return {Number}
+   * @deprecated
    */
   get priority () {
     return this.#priority;

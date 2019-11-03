@@ -70,9 +70,11 @@ export default class Yolog {
    * Defaults to `() => { return (new Date()).getTime() };`
    *
    * @param {Function} func Function to use.
+   * @return {Yolog} Self.
    */
   setTimestampFunction (func) {
     this.#timestamp = func;
+    return this;
   }
 
   /**
@@ -99,9 +101,11 @@ export default class Yolog {
    *
    * @param {String} tag Tag name.
    * @param {Boolean} [state] State to set the tag to.
+   * @return {Yolog} self
    */
   set (tag, state = null) {
     this.#tags[tag.toLowerCase()] = state !== null ? state : !this.get(tag);
+    return this;
   }
 
   /**
@@ -127,22 +131,26 @@ export default class Yolog {
    * Add a plugin to the current Yolog instance.
    *
    * @param {Plugin} plugin
+   * @return {Yolog} self
    */
   addPlugin (plugin) {
     this.#plugins.push(plugin);
     this.#plugins.sort((p, p2) => p.priority - p2.priority);
+    return this;
   }
 
   /**
    * Remove a plugin from current Yolog instance.
    *
    * @param {Plugin} plugin
+   * @return {Yolog} self
    */
   removePlugin (plugin) {
     const index = this.#plugins.findIndex((p) => p.id === plugin.id);
     if (index !== -1) {
       this.#plugins.splice(index, 1);
     }
+    return this;
   }
 
   #log = async (tag, message, ...args) => {
