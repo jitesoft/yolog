@@ -1,3 +1,8 @@
+v 2.6.3
+ * Deprecated `priority` in plugins.
+ * Made `setTimestampFunction`, `set`, `addPlugin`, `removePlugin` in Yolog return `this` (fluent).
+ * Made `set` in Plugin return `this` (fluent).
+
 v 2.6.0
  * Introduced a new parameter (error) for plugins.
  * Introduced new property (errorObject) on event.
