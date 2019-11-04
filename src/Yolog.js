@@ -158,7 +158,7 @@ export default class Yolog {
       return;
     }
 
-    if (!!args && args.length > 0) {
+    if (args.length > 0) {
       message = await this.#formatter(message, ...args);
     }
     const error = new Error(message);
