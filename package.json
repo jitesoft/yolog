@@ -3,6 +3,7 @@
     "description": "Simple pluggable async logger for node and browser alike.",
     "license": "MIT",
     "private": false,
+    "module": "src/Yolog.js",
     "esnext": {
         "main": "src/node/index.js",
         "browser": "src/web/index.js"
