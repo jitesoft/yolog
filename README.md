@@ -6,6 +6,7 @@
 [![coverage report](https://gitlab.com/jitesoft/open-source/javascript/yolog/badges/master/coverage.svg)](https://gitlab.com/jitesoft/open-source/javascript/yolog/commits/master)
 [![npm](https://img.shields.io/npm/dt/@jitesoft/yolog)](https://www.npmjs.com/package/@jitesoft/yolog)
 [![Back project](https://img.shields.io/badge/Open%20Collective-Tip%20the%20devs!-blue.svg)](https://opencollective.com/jitesoft-open-source)
+[![DeepScan grade](https://deepscan.io/api/teams/5978/projects/7842/branches/85543/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=5978&pid=7842&bid=85543)
 
 Simple pluggable async logger for node and browser alike.  
 
