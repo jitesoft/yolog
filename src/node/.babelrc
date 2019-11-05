@@ -1,7 +1,11 @@
 {
-  "presets": [
-    ["@jitesoft/main", {
-      "mode": "node"
-    }]
-  ]
+    "presets": [
+        [
+            "@jitesoft/main",
+            {
+                "mode": "node",
+                "useBuiltIns": "entry"
+            }
+        ]
+    ]
 }
