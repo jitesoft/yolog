@@ -27,7 +27,8 @@
         "plugin"
     ],
     "bugs": {
-        "url": "https://gitlab.com/jitesoft/open-source/javascript/yolog/issues"
+        "url": "https://github.com/jitesoft/yolog/issues",
+        "email": "sec@jitesoft.com"
     },
     "homepage": "https://yolog.js.org",
     "repository": {
