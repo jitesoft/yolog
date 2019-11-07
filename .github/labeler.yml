@@ -1,0 +1,14 @@
+tests:
+  - tests/*.js
+code-style:
+  - ./**/*.eslint*
+build:
+  - ./**/*.babel*
+  - webpack.config.js
+docs:
+  - README.md
+source:
+  - src/*.js
+package-updates:
+  - package.json
+  - package-lock.json
