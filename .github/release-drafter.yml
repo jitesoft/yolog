@@ -28,4 +28,4 @@ categories:
       - vuln
 
 exclude-labels:
-  - 'package-updates'
+  - 'dependencies'
