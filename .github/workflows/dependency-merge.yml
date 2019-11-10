@@ -22,6 +22,20 @@ jobs:
         env:
           CI: true
           NODE_ENV: development
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Tag
+          uses: actions/github@v1.0.0
+          env:
+            GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          with:
+            args: label autorebase
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
       - name: Merge
         uses: "pascalgn/automerge-action@733fcc62d711705eae9cd66fcf49c93c1d1a98c6"
         env:
