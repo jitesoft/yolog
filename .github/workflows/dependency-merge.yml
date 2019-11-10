@@ -29,7 +29,8 @@ jobs:
       - name: Comment to auto-merge
         uses: actions/github@v1.0.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets. BotToken }}
         with:
+          actor: "accounts+github@jitesoft.com"
           args: comment "@dependabot merge"
 
