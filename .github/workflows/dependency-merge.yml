@@ -9,20 +9,20 @@ jobs:
     strategy:
       matrix:
         node-version: [13.x, 12.x, 11.x 10.x]
-      steps:
-        - uses: actions/checkout@v1
-        - name: Test on node ${{ matrix.node-version }}
-          uses: actions/setup-node@v1
-          with:
-            node-version: ${{ matrix.node-versionn }}
-        - name: Install & test.
-          run: |
-            npm ci
-            npm test
-          env:
-            CI: true
-            NODE_ENV: development
-        - name: Merge
-          uses: "pascalgn/automerge-action@733fcc62d711705eae9cd66fcf49c93c1d1a98c6"
-          env:
-            GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    steps:
+      - uses: actions/checkout@v1
+      - name: Test on node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-versionn }}
+      - name: Install & test.
+        run: |
+          npm ci
+          npm test
+        env:
+          CI: true
+          NODE_ENV: development
+      - name: Merge
+        uses: "pascalgn/automerge-action@733fcc62d711705eae9cd66fcf49c93c1d1a98c6"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

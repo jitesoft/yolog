@@ -1,3 +1,4 @@
+name: Dependency update tests.
 on:
   push:
     branches:
@@ -9,16 +10,16 @@ jobs:
     strategy:
       matrix:
         node-version: [13.x, 12.x, 11.x 10.x]
-      steps:
-        - uses: actions/checkout@v1
-        - name: Test on node ${{ matrix.node-version }}
-          uses: actions/setup-node@v1
-          with:
-            node-version: ${{ matrix.node-versionn }}
-        - name: Install & test.
-          run: |
-            npm ci
-            npm test
-          env:
-            CI: true
-            NODE_ENV: development
+    steps:
+      - uses: actions/checkout@v1
+      - name: Test on node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-versionn }}
+      - name: Install & test.
+        run: |
+          npm ci
+          npm test
+        env:
+          CI: true
+          NODE_ENV: development
