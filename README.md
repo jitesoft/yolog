@@ -33,7 +33,7 @@ Yolog have three base files which you can make use of when it is compiled:
 * node.js
 * browser.js
 
-The `index.js` is only the API (contains the `Yolog` and `Plugin` interfaces and such) and could possibly be useful
+The `index.js` is only the API (contains the `Yolog` and `YologPlugin` interfaces and such) and could possibly be useful
 if you wish to create your own plugin but don't care about the other stuff.
 
 The `browser.js` file contains the same code as the `index.js` and an extra `ConsolePlugin` which is pre-initialized if 
@@ -44,7 +44,7 @@ using the `default` value from the package.
 
 When including the script, there will be a global `Yolog` object containing `logger` (which is an instance of yolog
 ready to use with the console plugin), `Yolog` which is the logger itself, if you wish to create a new instance yourself.
-`ConsolePlugin`, which is a plugin that produces output to the console and the `Plugin` class (which is used to create new plugins)
+`ConsolePlugin`, which is a plugin that produces output to the console and the `YologPlugin` class (which is used to create new plugins)
 
 Simply put:
 
@@ -143,9 +143,9 @@ When writing a new plugin, the `Plugin` class in the base lib is used as a base 
 the only method that really have to be implemented is the `log` method, the base class takes care of the rest!
 
 ```js
-import {Plugin} from '@jitesoft/yolog';
+import { YologPlugin } from '@jitesoft/yolog';
 
-export default class MyPlugin extends Plugin {  
+export default class MyPlugin extends YologPlugin {  
   /**
    * Method called when a log message is intercepted and the plugin is listening to the given tag.
    *
@@ -165,7 +165,7 @@ export default class MyPlugin extends Plugin {
 Plugin interface:
 
 ```typescript
-interface PluginInterface {
+interface YologPluginInterface {
   log (tag: string, timestamp: number, message: string, error): Promise<void>; /*Abstract, only method required to be implemented. */
   set (tag: string, state: boolean|null): void;
   get (tag: string): boolean|undefined;
@@ -235,9 +235,9 @@ used for this:
 
 ```typescript
 interface Yolog {
-  addPlugin(plugin: Plugin): Yolog;
-  removePlugin(plugin: Plugin): Yolog;
-  readonly plugins: Plugin[];
+  addPlugin(plugin: YologPlugin): Yolog;
+  removePlugin(plugin: YologPlugin): Yolog;
+  readonly plugins: YologPlugin[];
 }
 ```
 
@@ -316,7 +316,7 @@ The `available` and `active` getters works as with the yolog class, the first re
 the `active` returns which are turned on.
 
 ```typescript
-interface Plugin {
+interface YologPlugin {
   readonly available: string[];
   readonly active: string[];
 }
