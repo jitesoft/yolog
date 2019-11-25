@@ -18,6 +18,7 @@
         "email": "johannes@jitesoft.com"
     },
     "readmeFilename": "README.md",
+    "types": "Yolog.d.ts",
     "keywords": [
         "logging",
         "formatted",
