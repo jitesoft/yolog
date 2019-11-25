@@ -1,5 +1,5 @@
 import Yolog from '../src/Yolog';
-import Plugin from '../src/Plugin';
+import Plugin from '../src/YologPlugin';
 
 class TestPlugin extends Plugin {
   constructor (inner) {

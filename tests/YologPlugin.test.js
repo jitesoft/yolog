@@ -1,4 +1,4 @@
-import Plugin from '../src/Plugin';
+import Plugin from '../src/YologPlugin';
 
 describe('Tests for plugin class.', () => {
   let plugin = null;
@@ -13,6 +13,7 @@ describe('Tests for plugin class.', () => {
   ];
 
   beforeEach(() => {
+    // noinspection JSClosureCompilerSyntax
     plugin = new Plugin(); // Abstract I know, I don't care! :P
   });
 

@@ -1,8 +1,8 @@
 /** @abstract */
-export default class Plugin {
+export default class YologPlugin {
   static id = 0;
 
-  #id = Plugin.id++;
+  #id = YologPlugin.id++;
 
   get id () {
     return this.#id;
@@ -42,7 +42,7 @@ export default class Plugin {
    *
    * @param {String} tag
    * @param {Boolean} [state]
-   * @return {Plugin} Self.
+   * @return {YologPlugin} Self.
    */
   set (tag, state = null) {
     this.#tags[tag.toLowerCase()] = state !== null ? state : !this.get(tag);
