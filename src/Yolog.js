@@ -1,4 +1,4 @@
-import YologPlugin from './Plugin';
+import YologPlugin from './YologPlugin';
 import { EventHandler, Event } from '@jitesoft/events';
 import sprintf from '@jitesoft/sprintf';
 
