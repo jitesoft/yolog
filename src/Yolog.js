@@ -1,4 +1,4 @@
-import Plugin from './Plugin';
+import YologPlugin from './Plugin';
 import { EventHandler, Event } from '@jitesoft/events';
 import sprintf from '@jitesoft/sprintf';
 
@@ -10,7 +10,7 @@ import sprintf from '@jitesoft/sprintf';
 export default class Yolog {
   #eventHandler;
 
-  /** @type {Array<Plugin>} */
+  /** @type {Array<YologPlugin>} */
   #plugins;
 
   /** @type {Object} */
@@ -130,7 +130,7 @@ export default class Yolog {
   /**
    * Add a plugin to the current Yolog instance.
    *
-   * @param {Plugin} plugin
+   * @param {YologPlugin} plugin
    * @return {Yolog} self
    */
   addPlugin (plugin) {
@@ -142,7 +142,7 @@ export default class Yolog {
   /**
    * Remove a plugin from current Yolog instance.
    *
-   * @param {Plugin} plugin
+   * @param {YologPlugin} plugin
    * @return {Yolog} self
    */
   removePlugin (plugin) {
@@ -271,5 +271,5 @@ export default class Yolog {
 
 const logger = new Yolog();
 export {
-  Yolog, Plugin, logger
+  Yolog, YologPlugin, logger, YologPlugin as Plugin
 };
