@@ -13,6 +13,7 @@ describe('Tests for plugin class.', () => {
   ];
 
   beforeEach(() => {
+    // noinspection JSClosureCompilerSyntax
     plugin = new Plugin(); // Abstract I know, I don't care! :P
   });
 
