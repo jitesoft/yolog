@@ -29,6 +29,7 @@ deploy:
     - tags
   tags:
     - protected
+    - npm
 
 include:
   - https://gitlab.com/jitesoft/gitlab-ci-lib/raw/master/dependency_scanning.yml

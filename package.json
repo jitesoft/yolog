@@ -51,18 +51,18 @@
         "@jitesoft/sprintf": "^1.0.7"
     },
     "devDependencies": {
-        "@babel/core": "^7.7.4",
-        "@jitesoft/babel-preset-main": "^1.8.1",
-        "@jitesoft/eslint-config": "^1.8.1",
+        "@babel/core": "^7.7.5",
+        "@jitesoft/babel-preset-main": "^1.8.4",
+        "@jitesoft/eslint-config": "^1.8.5",
         "babel-eslint": "^10.0.3",
         "babel-jest": "^24.9.0",
         "babel-loader": "^8.0.6",
-        "core-js": "^3.4.5",
+        "core-js": "^3.4.7",
         "cross-env": "^6.0.3",
-        "eslint": "^6.7.1",
+        "eslint": "^6.7.2",
         "jest": "^24.9.0",
-        "webpack": "^4.41.2",
-        "webpack-cli": "^3.3.10"
+        "webpack": "^5.0.0-beta.7",
+        "webpack-cli": "^4.0.0-beta.1"
     },
     "scripts": {
         "test": "eslint src/ tests/ && jest yolog/tests/ && npm audit",
