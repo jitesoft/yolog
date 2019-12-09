@@ -8,6 +8,7 @@ import sprintf from '@jitesoft/sprintf';
  * Main class for the Yolog logging helper.
  */
 export default class Yolog {
+  /** @type {EventHandler} */
   #eventHandler;
 
   /** @type {Array<YologPlugin>} */
