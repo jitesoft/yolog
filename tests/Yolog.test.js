@@ -108,9 +108,9 @@ describe('Tests for Yolog class.', () => {
     });
 
     test('All tags default to TRUE', () => {
-      defaultTags.forEach((tag) => {
-        expect(logger.get(tag)).toBe(true);
-      });
+      for (let i = 0; i < defaultTags.length; i++) {
+        expect(logger.get(defaultTags[i])).toBe(true);
+      }
     });
 
     test('Setting tag to false will make only that tag false.', () => {
