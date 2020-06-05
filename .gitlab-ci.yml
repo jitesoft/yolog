@@ -1,16 +1,36 @@
-include:
-  - remote: https://gitlab.com/jitesoft/gitlab-ci-lib/raw/master/Scan/npm.yml
-  - remote: https://gitlab.com/jitesoft/gitlab-ci-lib/raw/master/license_management.yml
-  - remote: https://gitlab.com/jitesoft/gitlab-ci-lib/raw/master/js_common.yml
-  - template: SAST.gitlab-ci.yml
-
 stages:
   - test
-  - scan
   - deploy
 
 test:
-  extends: .npm:test
+  stage: test
+  image: jitesoft/node:latest
+  variables:
+    NODE_ENV: development
+  before_script:
+    - npm ci
+  script:
+    - npm run test
 
 deploy:
-  extends: .npm:build:deploy
+  stage: deploy
+  image: jitesoft/node:latest
+  variables:
+    NODE_ENV: development
+  before_script:
+    - npm ci
+  script:
+    - npm run build:prod
+    - mv dist/* ./
+    - rm -rf dist
+    - npm version ${CI_COMMIT_TAG}
+    - npm publish --access public
+  only:
+    - tags
+  tags:
+    - protected
+    - npm
+
+include:
+  - template: SAST.gitlab-ci.yml
+  - remote: https://gitlab.com/jitesoft/gitlab-ci-lib/raw/master/Scan/npm.yml
