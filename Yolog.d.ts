@@ -38,19 +38,35 @@ declare class YologPlugin {
      * @return List of active tags.
      */
     public readonly active: string[];
+    /**
+     * Disable internal error passing to the underlying plugin or event handler.
+     * If tag name/s are omitted, the setting will be global.
+     *
+     * @param [tag] Optional tags to toggle.
+     * @return self
+     */
+    disableError(...tag: string[]): this;
+    /**
+     * Enable internal error passing to the underlying plugin or event handler.
+     * If tag name/s are omitted, the setting will be global.
+     *
+     * @param [tag] Optional tags to toggle.
+     * @return self
+     */
+    enableError(...tag: string[]): this;
 }
 
 /**
  * Tags states, true means active, false means inactive.
  */
 declare interface Tags {
-    debug: boolean;
-    info: boolean;
-    warning: boolean;
-    error: boolean;
-    critical: boolean;
-    alert: boolean;
-    emergency: boolean;
+    debug: { enabled: boolean, error: boolean };
+    info: { enabled: boolean, error: boolean };
+    warning: { enabled: boolean, error: boolean };
+    error: { enabled: boolean, error: boolean };
+    critical: { enabled: boolean, error: boolean };
+    alert: { enabled: boolean, error: boolean };
+    emergency: { enabled: boolean, error: boolean };
 }
 
 /**
@@ -58,7 +74,6 @@ declare interface Tags {
  */
 declare class Yolog {
     public constructor(plugins?: any[], tags?: Tags);
-
     /**
      * Use the logger as an event handler and add a callback that will fire on a specific tag.
      *
@@ -92,6 +107,22 @@ declare class Yolog {
      * @return Self.
      */
     public setTimestampFunction(func: () => number): Yolog;
+    /**
+     * Disable internal error passing to the underlying plugin or event handler.
+     * If tag name/s are omitted, the setting will be global.
+     *
+     * @param [tag] Optional tags to toggle.
+     * @return Self.
+     */
+    public disableError (...tag: string[]): this;
+    /**
+     * Enable internal error passing to the underlying plugin or event handler.
+     * If tag name/s are omitted, the setting will be global.
+     *
+     * @param [tag] Optional tags to toggle.
+     * @return Self.
+     */
+    public enableError (...tag: string[]): this;
     /**
      * Get a list of tags that are active.
      *
