@@ -53,13 +53,13 @@
     "devDependencies": {
         "@babel/core": "^7.10.2",
         "@jitesoft/babel-preset-main": "^2.3.1",
-        "@jitesoft/eslint-config": "^2.1.1",
-        "babel-eslint": "^11.0.0-beta.2",
+        "@jitesoft/eslint-config": "^2.1.2",
+        "babel-eslint": "^10.1.0",
         "babel-jest": "^26.0.1",
         "babel-loader": "^8.1.0",
         "core-js": "^3.6.5",
         "cross-env": "^7.0.2",
-        "eslint": "^7.1.0",
+        "eslint": "^7.2.0",
         "jest": "^26.0.1",
         "webpack": "^5.0.0-beta.17",
         "webpack-cli": "^4.0.0-beta.8"
