@@ -175,8 +175,6 @@ interface YologPluginInterface {
   set (tag: string, state: boolean|null): void;
   get (tag: string): boolean|undefined;
   /*get*/ active (): Array<string>;
-  /*set*/ priority (value: number): void;
-  /*get*/ priority (): number;
   enableError(...tag: Array<string>): this;
   disableError(...tag: Array<string>): this;
 }
@@ -370,11 +368,6 @@ interface YologPlugin {
 The methods allow the user to toggle each plugin errors on or off (that is, passing of the `Error` object through the log parameter at all). 
 Each plugin is responsible to make sure that the error object is not `null` before doing anything with its properties.
 Calling the functions without any argument will set errors to on or off for all the tags instead of a single tag.
-
-**Priority**
-
-The `priority` getter and setter have been deprecated since v 2.6.3 and will be removed in v 3.x. It has no usage as of now, due to the
-fact that Yolog calls all the plugins asynchronously (making priority nil).
 
 ## Notes
 
