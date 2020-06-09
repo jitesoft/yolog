@@ -83,15 +83,4 @@ describe('Tests for plugin class.', () => {
       expect(plugin.active).toEqual(expect.not.arrayContaining(['debug', 'info']));
     });
   });
-
-  describe('Tests for get/set `priority`', () => {
-    test('Get priority should default to 0', () => {
-      expect(plugin.priority).toEqual(0);
-    });
-
-    test('Set priority should change priority.', () => {
-      plugin.priority = 5;
-      expect(plugin.priority).toEqual(5);
-    });
-  });
 });
