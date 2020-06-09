@@ -12,15 +12,48 @@ export default class ConsolePlugin extends Plugin {
   };
 
   #nl = process.platform === 'win32' ? '\r\n' : '\n';
+  #color = true;
+
+  /**
+   * Change the console plugin to use or not use colors in output.
+   * @param {boolean} state
+   */
+  set color (state) {
+    this.#color = state;
+  }
+
+  /**
+   * Check weather the console plugin uses colors or not.
+   * @return {boolean}
+   */
+  get color () {
+    return this.#color;
+  }
+
+  /**
+   * @param {boolean} disableColor Disables colors in output.
+   */
+  constructor (disableColor = false) {
+    super();
+    this.#color = !disableColor;
+  }
 
   async log (tag, timestamp, message, _) {
     await new Promise((resolve, reject) => {
-      process[this.#colors[tag].call].write(
-        `\u001b[${this.#colors[tag].color}m[${tag.toUpperCase()}] ` +
-        `(${(new Date(timestamp)).toLocaleString()}): ${message}\u001b[0m${this.#nl}`,
-        'UTF-8',
-        (err) => err ? reject(err) : resolve()
-      );
+      if (!this.color) {
+        process[this.#colors[tag].call].write(
+          `[${tag.toUpperCase()}] (${(new Date(timestamp)).toLocaleString()}): ${message}${this.#nl}`,
+          'UTF-8',
+          (err) => err ? reject(err) : resolve()
+        );
+      } else {
+        process[this.#colors[tag].call].write(
+          `\u001b[${this.#colors[tag].color}m[${tag.toUpperCase()}] ` +
+          `(${(new Date(timestamp)).toLocaleString()}): ${message}\u001b[0m${this.#nl}`,
+          'UTF-8',
+          (err) => err ? reject(err) : resolve()
+        );
+      }
     });
   }
 }
