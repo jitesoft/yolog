@@ -17,6 +17,9 @@ export default class Yolog {
   /** @type {Object} */
   #tags;
 
+  /** @type {Boolean} */
+  #errors = true;
+
   #timestamp = () => {
     return (new Date()).getTime();
   };
@@ -25,10 +28,88 @@ export default class Yolog {
     return Promise.resolve(sprintf(message, ...args));
   };
 
-  constructor (plugins = [], tags = { debug: true, info: true, warning: true, error: true, critical: true, alert: true, emergency: true }) {
+  constructor (plugins = [], tags = {
+    debug: {
+      enabled: true,
+      error: true
+    },
+    info: {
+      enabled: true,
+      error: true
+    },
+    warning: {
+      enabled: true,
+      error: true
+    },
+    error: {
+      enabled: true,
+      error: true
+    },
+    critical: {
+      enabled: true,
+      error: true
+    },
+    alert: {
+      enabled: true,
+      error: true
+    },
+    emergency: {
+      enabled: true,
+      error: true
+    }
+  }) {
     this.#eventHandler = new EventHandler();
+
+    // Just to make sure backwards compatibility is ensured.
+    for (const tag in tags) {
+      tags[tag] = (typeof tags[tag] === 'object') ? tags[tag] : {
+        enabled: tags[tag],
+        error: true
+      };
+    }
+
     this.#tags = tags;
     this.#plugins = plugins;
+  }
+
+  /**
+   * Disable internal error passing to the underlying plugin or event handler.
+   * If tag name/s are omitted, the setting will be global.
+   *
+   * @param {...string} [tag] Optional tags to toggle.
+   * @return {Yolog} This
+   */
+  disableError (...tag) {
+    if (tag.length === 0) {
+      this.#errors = false;
+      return this;
+    }
+
+    tag.forEach((tag) => {
+      if (this.#tags[tag.toLowerCase()]) {
+        this.#tags[tag.toLowerCase()].error = false;
+      }
+    });
+  }
+
+  /**
+   * Enable internal error passing to the underlying plugin or event handler.
+   * If tag name/s are omitted, the setting will be global.
+   *
+   * @param {...string} [tag] Optional tags to toggle.
+   * @return {Yolog} This
+   */
+  enableError (...tag) {
+    if (tag.length === 0) {
+      this.#errors = true;
+      return this;
+    }
+
+    tag.forEach((tag) => {
+      if (this.#tags[tag.toLowerCase()]) {
+        this.#tags[tag.toLowerCase()].error = true;
+      }
+    });
   }
 
   /**
@@ -105,7 +186,15 @@ export default class Yolog {
    * @return {Yolog} self
    */
   set (tag, state = null) {
-    this.#tags[tag.toLowerCase()] = state !== null ? state : !this.get(tag);
+    tag = tag.toLowerCase();
+    if (tag in this.#tags) {
+      this.#tags[tag].enabled = (state === null ? !this.get(tag) : state);
+      return this;
+    }
+    this.#tags[tag] = {
+      enabled: state === null ? false : state,
+      error: true // Always default to true.
+    };
     return this;
   }
 
@@ -113,10 +202,11 @@ export default class Yolog {
    * Get state of a specific tag in the Yolog instance.
    *
    * @param {String} tag
-   * @return {Boolean}
+   * @return {Boolean|undefined}
    */
   get (tag) {
-    return this.#tags[tag.toLowerCase()];
+    tag = tag.toLowerCase();
+    return this.#tags[tag]?.enabled ?? undefined;
   }
 
   /**
@@ -155,19 +245,23 @@ export default class Yolog {
   }
 
   #log = async (tag, message, ...args) => {
-    if (tag in this.#tags && this.#tags[tag] === false) {
+    if ((this.#tags[tag]?.enabled ?? true) === false) {
       return;
     }
 
     if (args.length > 0) {
       message = await this.#formatter(message, ...args);
     }
-    const error = new Error(message);
+
+    let error = null;
+    if (this.#errors && (this.#tags[tag]?.error ?? true)) {
+      error = new Error(message);
+    }
 
     const time = this.#timestamp();
     const promises = this.#plugins.map((plugin) => {
       if (plugin.get(tag) === true) {
-        return plugin.log(tag, time, message, error);
+        return plugin.log(tag, time, message, plugin.errorIsEnabled(tag) ? error : null);
       }
       return Promise.resolve();
     });

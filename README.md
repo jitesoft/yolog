@@ -57,16 +57,16 @@ Simply put:
 ```
 
 ```javascript
-import logger from '@jitesoft/yolog';
-import logger from '@jitesoft/yolog/browser'; // Browser specific
-import logger from '@jitesoft/yolog/node';    // Node specific
+import { logger } from '@jitesoft/yolog';
+import { logger } from '@jitesoft/yolog/browser'; // Browser specific
+import { logger } from '@jitesoft/yolog/node';    // Node specific
 logger.debug('Weee!')
 ```
 
 ```javascript
-const logger = require('@jitesoft/yolog');
-const logger = require('@jitesoft/yolog/browser'); // Browser specific
-const logger = require('@jitesoft/yolog/node');    // Node specific
+const logger = require('@jitesoft/yolog').logger;
+const logger = require('@jitesoft/yolog/browser').logger; // Browser specific
+const logger = require('@jitesoft/yolog/node').logger;    // Node specific
 logger.debug('Weee!')
 ```
 
@@ -78,15 +78,20 @@ The pre-defined tags are (name and default value):
 
 ```json
 {
-  "debug": true,
-  "info": true,
-  "warning": true,
-  "error": true,
-  "critical": true,
-  "alert": true,
-  "emergency": true
+  "debug": { "enabled":  true, "error": true },
+  "info": { "enabled":  true, "error": true },
+  "warning": { "enabled":  true, "error": true },
+  "error": { "enabled":  true, "error": true },
+  "critical": { "enabled":  true, "error": true },
+  "alert": { "enabled":  true, "error": true },
+  "emergency": { "enabled":  true, "error": true }
 }
 ```
+
+When using the constructor, Yolog will accept the key-value pairs as `string : bool`, 
+defaulting `error` to true and setting `enabled` to the boolean value.
+
+The `error` key is used to allow yolog to know if it should pass a generated error object to the plugins to allow for stack traces and similar.
 
 _Yolog uses the [@jitesoft/sprinf](https://www.npmjs.com/package/@jitesoft/sprintf) package to enable message and argument 
 building. This due to not wanting to use a node-specific method as `util.format` when building for cross env support.
@@ -172,6 +177,8 @@ interface YologPluginInterface {
   /*get*/ active (): Array<string>;
   /*set*/ priority (value: number): void;
   /*get*/ priority (): number;
+  enableError(...tag: Array<string>): this;
+  disableError(...tag: Array<string>): this;
 }
 ```
 
@@ -185,6 +192,7 @@ The following list are plugins maintained and supported by Jitesoft.
 * [`@jitesoft/yolog-sentry-plugin`](https://www.npmjs.com/package/@jitesoft/yolog-sentry-plugin)
 * [`@jitesoft/yolog-slack-plugin`](https://www.npmjs.com/package/@jitesoft/yolog-slack-plugin)
 * [`@jitesoft/yolog-email-plugin`](https://www.npmjs.com/package/@jitesoft/yolog-email-plugin)
+* [`@jitesoft/yolog-json-plugin`](https://www.npmjs.com/package/@jitesoft/yolog-json-plugin)
 
 _More are under development._
 
@@ -303,6 +311,19 @@ interface Yolog {
 The `available` getter will return the names of all tags that are set in yolog, this includes all custom tags you have created.
 The `active` getter will return the names of all the tags that have state set to `true`.
 
+**Error**
+
+```typescript
+interface Yolog {
+  enableError(...tag: Array<string>): this;
+  disableError(...tag: Array<string>): this;
+}
+```
+
+The enable and disable error methods toggles the Yolog instance to create and send a error to the plugins (and events). 
+Each plugin have their own controll of this too, while this is on a higher level. Tags passed will be toggled on or off, while
+calling the functions without any argument will set errors to on or off for all the tags instead of a single tag.
+
 ### Plugin
 
 Just as with the base API, the plugins have their own `tags` to turn off and on! This is to make it possible to have specific 
@@ -336,6 +357,19 @@ can be used inside the plugin to format a nice time string for output.
 
 Since v 2.6.0 a new `Error` argument is passed as the last argument of the log method. It can be used to output the callstack or similar
 information.
+
+**Error**
+
+```typescript
+interface YologPlugin {
+  enableError(...tag: Array<string>): this;
+  disableError(...tag: Array<string>): this;
+}
+```
+
+The methods allow the user to toggle each plugin errors on or off (that is, passing of the `Error` object through the log parameter at all). 
+Each plugin is responsible to make sure that the error object is not `null` before doing anything with its properties.
+Calling the functions without any argument will set errors to on or off for all the tags instead of a single tag.
 
 **Priority**
 
