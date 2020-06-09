@@ -31,6 +31,14 @@ export default class Yolog {
     this.#plugins = plugins;
   }
 
+  disableError (tag = null) {
+
+  }
+
+  enableError (tag = null) {
+
+  }
+
   /**
    * Use the logger as an event handler and add a callback that will fire on a specific tag.
    *
@@ -162,6 +170,7 @@ export default class Yolog {
     if (args.length > 0) {
       message = await this.#formatter(message, ...args);
     }
+
     const error = new Error(message);
 
     const time = this.#timestamp();
