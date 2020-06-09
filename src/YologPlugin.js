@@ -52,7 +52,7 @@ export default class YologPlugin {
    * @return {YologPlugin} This
    */
   disableError (...tag) {
-    if (!tag || tag.length === 0) {
+    if (tag.length === 0) {
       this.#errors = false;
       return this;
     }
@@ -72,7 +72,7 @@ export default class YologPlugin {
    * @return {YologPlugin} This
    */
   enableError (...tag) {
-    if (!tag || tag.length === 0) {
+    if (tag.length === 0) {
       this.#errors = true;
       return this;
     }

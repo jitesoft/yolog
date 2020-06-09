@@ -80,7 +80,7 @@ export default class Yolog {
    * @return {Yolog} This
    */
   disableError (...tag) {
-    if (!tag || tag.length === 0) {
+    if (tag.length === 0) {
       this.#errors = false;
       return this;
     }
@@ -100,7 +100,7 @@ export default class Yolog {
    * @return {Yolog} This
    */
   enableError (...tag) {
-    if (!tag || tag.length === 0) {
+    if (tag.length === 0) {
       this.#errors = true;
       return this;
     }
