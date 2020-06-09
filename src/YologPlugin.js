@@ -8,9 +8,6 @@ export default class YologPlugin {
     return this.#id;
   }
 
-  /** @deprecated */
-  #priority = 0;
-
   #tags = {
     debug: {
       enabled: true,
