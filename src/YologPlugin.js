@@ -159,24 +159,4 @@ export default class YologPlugin {
   get active () {
     return Object.keys(this.#tags).filter(this.get.bind(this));
   }
-
-  /**
-   * Setter for plugin priority, depending on priority it will be invoked before or after other plugins.
-   *
-   * @param value
-   * @deprecated
-   */
-  set priority (value) {
-    this.#priority = value;
-  }
-
-  /**
-   * Getter to fetch the plugin priority, depending on priority, it will be invoked before or after other plugins.
-   *
-   * @return {Number}
-   * @deprecated
-   */
-  get priority () {
-    return this.#priority;
-  }
 }
