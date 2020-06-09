@@ -85,6 +85,17 @@ export default class YologPlugin {
   }
 
   /**
+   * Check if error for given tag is enabled.
+   *
+   * @internal
+   * @param {string} tag
+   * @return {boolean}
+   */
+  errorIsEnabled (tag) {
+    return !(!this.#errors || this.#tags[tag.toLowerCase()].error === false);
+  }
+
+  /**
    * Method called when a log message is intercepted and the plugin is listening to the given tag.
    *
    * @param {String} tag       Tag which was used when logging the message.

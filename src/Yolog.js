@@ -261,7 +261,7 @@ export default class Yolog {
     const time = this.#timestamp();
     const promises = this.#plugins.map((plugin) => {
       if (plugin.get(tag) === true) {
-        return plugin.log(tag, time, message, error);
+        return plugin.log(tag, time, message, plugin.errorIsEnabled(tag) ? error : null);
       }
       return Promise.resolve();
     });
