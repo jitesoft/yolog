@@ -226,7 +226,6 @@ export default class Yolog {
    */
   addPlugin (plugin) {
     this.#plugins.push(plugin);
-    this.#plugins.sort((p, p2) => p.priority - p2.priority);
     return this;
   }
 
