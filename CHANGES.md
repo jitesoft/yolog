@@ -1,3 +1,12 @@
+v 3.0.0
+  * Removal of deprecated `priority`.
+  * `ConsolePlugin` for nodejs now have a `disableColors` (default false) constructor argument.
+  * `ConsolePlugin` for nodejs now have get/set for color to enable or disable after creation.
+
+
+v 2.8.0
+ * Ability to toggle `errors` on and off.
+
 v 2.6.3
  * Deprecated `priority` in plugins.
  * Made `setTimestampFunction`, `set`, `addPlugin`, `removePlugin` in Yolog return `this` (fluent).
