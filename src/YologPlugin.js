@@ -12,14 +12,77 @@ export default class YologPlugin {
   #priority = 0;
 
   #tags = {
-    debug: true,
-    info: true,
-    warning: true,
-    error: true,
-    critical: true,
-    alert: true,
-    emergency: true
+    debug: {
+      enabled: true,
+      error: true
+    },
+    info: {
+      enabled: true,
+      error: true
+    },
+    warning: {
+      enabled: true,
+      error: true
+    },
+    error: {
+      enabled: true,
+      error: true
+    },
+    critical: {
+      enabled: true,
+      error: true
+    },
+    alert: {
+      enabled: true,
+      error: true
+    },
+    emergency: {
+      enabled: true,
+      error: true
+    }
   };
+
+  #errors = true;
+
+  /**
+   * Disable internal error passing to the underlying plugin or event handler.
+   * If tag name/s are omitted, the setting will be global.
+   *
+   * @param {...string} [tag] Optional tags to toggle.
+   * @return {YologPlugin} This
+   */
+  disableError (...tag) {
+    if (!tag || tag.length === 0) {
+      this.#errors = false;
+      return this;
+    }
+
+    tag.forEach((tag) => {
+      if (this.#tags[tag.toLowerCase()]) {
+        this.#tags[tag.toLowerCase()].error = false;
+      }
+    });
+  }
+
+  /**
+   * Enable internal error passing to the underlying plugin or event handler.
+   * If tag name/s are omitted, the setting will be global.
+   *
+   * @param {...string} [tag] Optional tags to toggle.
+   * @return {YologPlugin} This
+   */
+  enableError (...tag) {
+    if (!tag || tag.length === 0) {
+      this.#errors = true;
+      return this;
+    }
+
+    tag.forEach((tag) => {
+      if (this.#tags[tag.toLowerCase()]) {
+        this.#tags[tag.toLowerCase()].error = true;
+      }
+    });
+  }
 
   /**
    * Method called when a log message is intercepted and the plugin is listening to the given tag.
@@ -45,7 +108,16 @@ export default class YologPlugin {
    * @return {YologPlugin} Self.
    */
   set (tag, state = null) {
-    this.#tags[tag.toLowerCase()] = state !== null ? state : !this.get(tag);
+    tag = tag.toLowerCase();
+    if (!(tag in this.#tags)) {
+      this.#tags[tag] = {
+        enabled: state === null ? true : state,
+        error: true
+      };
+      return this;
+    }
+
+    this.#tags[tag.toLowerCase()].enabled = state !== null ? state : !this.get(tag);
     return this;
   }
 
@@ -56,7 +128,7 @@ export default class YologPlugin {
    * @return {Boolean}
    */
   get (tag) {
-    return this.#tags[tag.toLowerCase()];
+    return this.#tags[tag.toLowerCase()]?.enabled ?? undefined;
   }
 
   /**

@@ -79,6 +79,53 @@ describe('Tests for Yolog class.', () => {
     });
   });
 
+  describe('Test error toggling on plugin.', () => {
+    test('Test that global off turns off all errors.', async () => {
+      plugin.disableError();
+      await logger.debug('test');
+      expect(plugin.innerFunction).toHaveBeenCalledWith('debug', expect.any(Number), 'test', null);
+    });
+
+    test('Test that tag-off turns off errors on the specific tag.', async () => {
+      plugin.disableError('debug', 'info');
+      await logger.debug('test');
+      await logger.info('test');
+      await logger.error('test');
+
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(1, 'debug', expect.any(Number), 'test', null);
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(2, 'info', expect.any(Number), 'test', null);
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(3, 'error', expect.any(Number), 'test', expect.any(Error));
+    });
+
+    test('That toggle on turns errors back on.', async () => {
+      plugin.disableError();
+      await logger.debug('test');
+      plugin.enableError();
+      await logger.debug('test');
+
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(1, 'debug', expect.any(Number), 'test', null);
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(2, 'debug', expect.any(Number), 'test', expect.any(Error));
+    });
+
+    test('That toggle on-tag turns errors back on for tag.', async () => {
+      plugin.disableError('debug', 'info');
+      await logger.debug('test');
+      await logger.info('test');
+      await logger.error('test');
+      plugin.enableError('debug');
+      await logger.debug('test');
+      await logger.info('test');
+      await logger.error('test');
+
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(1, 'debug', expect.any(Number), 'test', null);
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(2, 'info', expect.any(Number), 'test', null);
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(3, 'error', expect.any(Number), 'test', expect.any(Error));
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(4, 'debug', expect.any(Number), 'test', expect.any(Error));
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(5, 'info', expect.any(Number), 'test', null);
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(6, 'error', expect.any(Number), 'test', expect.any(Error));
+    });
+  });
+
   describe('Test built-in tags.', () => {
     test('Test all tags.', async () => {
       for (let i = 0; i < defaultTags.length; i++) {
