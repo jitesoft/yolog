@@ -45,9 +45,9 @@ describe('Tests for Yolog class.', () => {
       await logger.info('test');
       await logger.error('test');
 
-      expect(plugin.innerFunction).toHaveBeenCalledWith(1, 'debug', expect.any(Number), 'test', null);
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(1, 'debug', expect.any(Number), 'test', null);
       expect(plugin.innerFunction).toHaveBeenNthCalledWith(2, 'info', expect.any(Number), 'test', null);
-      expect(plugin.innerFunction).toHaveBeenCalledWith(3, 'error', expect.any(Number), 'test', expect.any(Error));
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(3, 'error', expect.any(Number), 'test', expect.any(Error));
     });
 
     test('That toggle on turns errors back on.', async () => {
@@ -56,8 +56,8 @@ describe('Tests for Yolog class.', () => {
       logger.enableError();
       await logger.debug('test');
 
-      expect(plugin.innerFunction).toHaveBeenCalledWith(1, 'debug', expect.any(Number), 'test', null);
-      expect(plugin.innerFunction).toHaveBeenCalledWith(2, 'debug', expect.any(Number), 'test', expect.any(Error));
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(1, 'debug', expect.any(Number), 'test', null);
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(2, 'debug', expect.any(Number), 'test', expect.any(Error));
     });
 
     test('That toggle on-tag turns errors back on for tag.', async () => {
@@ -70,12 +70,12 @@ describe('Tests for Yolog class.', () => {
       await logger.info('test');
       await logger.error('test');
 
-      expect(plugin.innerFunction).toHaveBeenCalledWith(1, 'debug', expect.any(Number), 'test', null);
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(1, 'debug', expect.any(Number), 'test', null);
       expect(plugin.innerFunction).toHaveBeenNthCalledWith(2, 'info', expect.any(Number), 'test', null);
-      expect(plugin.innerFunction).toHaveBeenCalledWith(3, 'error', expect.any(Number), 'test', expect.any(Error));
-      expect(plugin.innerFunction).toHaveBeenCalledWith(1, 'debug', expect.any(Number), 'test', null);
-      expect(plugin.innerFunction).toHaveBeenNthCalledWith(2, 'info', expect.any(Number), 'test', expect.any(Error));
-      expect(plugin.innerFunction).toHaveBeenCalledWith(3, 'error', expect.any(Number), 'test', expect.any(Error));
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(3, 'error', expect.any(Number), 'test', expect.any(Error));
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(4, 'debug', expect.any(Number), 'test', expect.any(Error));
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(5, 'info', expect.any(Number), 'test', null);
+      expect(plugin.innerFunction).toHaveBeenNthCalledWith(6, 'error', expect.any(Number), 'test', expect.any(Error));
     });
   });
 
