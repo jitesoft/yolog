@@ -3,16 +3,22 @@
     "description": "Simple pluggable async logger for node and browser alike.",
     "license": "MIT",
     "private": false,
+    "module": "src/Yolog.js",
     "esnext": {
         "main": "src/node/index.js",
         "browser": "src/web/index.js"
     },
     "main": "index.js",
+    "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/jitesoft-open-source"
+    },
     "author": {
         "name": "Johannes Tegnér",
         "email": "johannes@jitesoft.com"
     },
     "readmeFilename": "README.md",
+    "types": "Yolog.d.ts",
     "keywords": [
         "logging",
         "formatted",
@@ -26,7 +32,8 @@
         "plugin"
     ],
     "bugs": {
-        "url": "https://gitlab.com/jitesoft/open-source/javascript/yolog/issues"
+        "url": "https://github.com/jitesoft/yolog/issues",
+        "email": "sec@jitesoft.com"
     },
     "homepage": "https://yolog.js.org",
     "repository": {
@@ -40,23 +47,22 @@
         ]
     },
     "dependencies": {
-        "@jitesoft/events": "^1.3.12",
-        "@jitesoft/sprintf": "^1.0.0"
+        "@jitesoft/events": "^1.3.23",
+        "@jitesoft/sprintf": "^1.0.14"
     },
     "devDependencies": {
-        "@babel/core": "^7.6.4",
-        "@babel/runtime-corejs3": "^7.6.3",
-        "@jitesoft/babel-preset-main": "^1.6.3",
-        "@jitesoft/eslint-config": "^1.7.2",
-        "babel-eslint": "^10.0.3",
-        "babel-jest": "^24.9.0",
-        "babel-loader": "^8.0.6",
-        "core-js": "^3.3.6",
-        "cross-env": "^6.0.3",
-        "eslint": "^6.6.0",
-        "jest": "^24.9.0",
-        "webpack": "^4.41.2",
-        "webpack-cli": "^3.3.10"
+        "@babel/core": "^7.10.2",
+        "@jitesoft/babel-preset-main": "^2.3.1",
+        "@jitesoft/eslint-config": "^2.1.1",
+        "babel-eslint": "^11.0.0-beta.2",
+        "babel-jest": "^26.0.1",
+        "babel-loader": "^8.1.0",
+        "core-js": "^3.6.5",
+        "cross-env": "^7.0.2",
+        "eslint": "^7.2.0",
+        "jest": "^26.0.1",
+        "webpack": "^5.0.0-beta.17",
+        "webpack-cli": "^4.0.0-beta.8"
     },
     "scripts": {
         "test": "eslint src/ tests/ && jest yolog/tests/ && npm audit",

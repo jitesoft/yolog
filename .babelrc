@@ -1,5 +1,5 @@
 {
-  "presets": [
-    "@jitesoft/main"
-  ]
+    "presets": [
+        "@jitesoft/main"
+    ]
 }

@@ -27,9 +27,10 @@ deploy:
     - npm publish --access public
   only:
     - tags
+  tags:
+    - protected
+    - npm
 
 include:
-  - https://gitlab.com/jitesoft/gitlab-ci-lib/raw/master/dependency_scanning.yml
-
-scan:
-  extends: .scan:npm
+  - template: SAST.gitlab-ci.yml
+  - remote: https://gitlab.com/jitesoft/gitlab-ci-lib/raw/master/Scan/npm.yml
