@@ -114,7 +114,7 @@ declare class Yolog {
      * @param [tag] Optional tags to toggle.
      * @return Self.
      */
-    public disableError (...tag: string[]): this;
+    public disableError (...tag: string[]): Yolog;
     /**
      * Enable internal error passing to the underlying plugin or event handler.
      * If tag name/s are omitted, the setting will be global.
@@ -122,7 +122,7 @@ declare class Yolog {
      * @param [tag] Optional tags to toggle.
      * @return Self.
      */
-    public enableError (...tag: string[]): this;
+    public enableError (...tag: string[]): Yolog;
     /**
      * Get a list of tags that are active.
      *
