@@ -11,9 +11,21 @@ export default class ConsolePlugin extends Plugin {
     info: { call: 'info', color: '' }
   };
 
+  #formatDate = (date) => date.toLocaleString();
+
+  /**
+   * Set method used to format date with.
+   * Defaults to `date.toLocaleString()`.
+   *
+   * @param {function} func Callback to use.
+   */
+  setDateFormatMethod (func) {
+    this.#formatDate = func;
+  }
+
   async log (tag, timestamp, message, error) {
     await new Promise((resolve, reject) => {
-      const str = `%c[${tag.toUpperCase()}] (${(new Date()).toLocaleString()}): ${message}`;
+      const str = `%c[${tag.toUpperCase()}] (${this.#formatDate(new Date())}): ${message}`;
       window.console[this.#colors[tag].call](str, this.#colors[tag].color);
       if (error !== null) {
         window.console[this.#colors[tag].call](error.stack);
