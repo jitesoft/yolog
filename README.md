@@ -91,7 +91,8 @@ The pre-defined tags are (name and default value):
 When using the constructor, Yolog will accept the key-value pairs as `string : bool`, 
 defaulting `error` to true and setting `enabled` to the boolean value.
 
-The `error` key is used to allow yolog to know if it should pass a generated error object to the plugins to allow for stack traces and similar.
+The `error` key is used to allow yolog to know if it should pass the first error it encounters in the argument list as the error parameter when calling
+its plugins. This allows the user to pass errors which could be printed out with a nice looking stack trace in the plugins.
 
 _Yolog uses the [@jitesoft/sprinf](https://www.npmjs.com/package/@jitesoft/sprintf) package to enable message and argument 
 building. This due to not wanting to use a node-specific method as `util.format` when building for cross env support.
@@ -353,8 +354,12 @@ The log method is the most important function of the Plugins. It is basically th
 to all plugins. The tag is the tag that was used when the log call was made. Timestamp is intended to be a Unix timestamp, which
 can be used inside the plugin to format a nice time string for output.  
 
-Since v 2.6.0 a new `Error` argument is passed as the last argument of the log method. It can be used to output the callstack or similar
-information.
+Since v `2.6.0` a new `Error` argument is passed as the last argument of the log method. It can be used to output the callstack or similar
+information.  
+
+Since v `3.0.0` the `Error` argument depends on the input from the user due to the fact that stack traces in javascript is not working
+as one expect them to work.  
+In future versions, if a better fix is found, this might change.
 
 **Error**
 
@@ -366,7 +371,7 @@ interface YologPlugin {
 ```
 
 The methods allow the user to toggle each plugin errors on or off (that is, passing of the `Error` object through the log parameter at all). 
-Each plugin is responsible to make sure that the error object is not `null` before doing anything with its properties.
+Each plugin is responsible to make sure the error object is not `null` before doing anything with its properties.
 Calling the functions without any argument will set errors to on or off for all the tags instead of a single tag.
 
 ## Notes
@@ -404,7 +409,7 @@ If you wish to contribute by monetary means, feel free to click the `sponsor` bu
 ```text
 The MIT License (MIT)
 
-Copyright (c) 2019 Johannes Tegnér / Jitesoft
+Copyright (c) 2014 - 2020 Johannes Tegnér / Jitesoft
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

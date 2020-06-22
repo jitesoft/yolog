@@ -38,18 +38,23 @@ export default class ConsolePlugin extends Plugin {
     this.#color = !disableColor;
   }
 
-  async log (tag, timestamp, message, _) {
+  async log (tag, timestamp, message, error) {
+    let stack = '';
+    if (error !== null) {
+      stack = '\n' + error.stack.split('\n').map(s => s.trim()).join('\n\t');
+    }
+
     await new Promise((resolve, reject) => {
       if (!this.color) {
         process[this.#colors[tag].call].write(
-          `[${tag.toUpperCase()}] (${(new Date(timestamp)).toLocaleString()}): ${message}${this.#nl}`,
+          `[${tag.toUpperCase()}] (${(new Date(timestamp)).toLocaleString()}): ${message}${stack}${this.#nl}`,
           'UTF-8',
           (err) => err ? reject(err) : resolve()
         );
       } else {
         process[this.#colors[tag].call].write(
           `\u001b[${this.#colors[tag].color}m[${tag.toUpperCase()}] ` +
-          `(${(new Date(timestamp)).toLocaleString()}): ${message}\u001b[0m${this.#nl}`,
+          `(${(new Date(timestamp)).toLocaleString()}): ${message}\u001b[0m${stack}${this.#nl}`,
           'UTF-8',
           (err) => err ? reject(err) : resolve()
         );

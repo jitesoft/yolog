@@ -54,9 +54,9 @@ export default class YologPlugin {
       return this;
     }
 
-    tag.forEach((tag) => {
-      if (this.#tags[tag.toLowerCase()]) {
-        this.#tags[tag.toLowerCase()].error = false;
+    tag.forEach((t) => {
+      if (this.#tags[t.toLowerCase()]) {
+        this.#tags[t.toLowerCase()].error = false;
       }
     });
   }
@@ -74,9 +74,9 @@ export default class YologPlugin {
       return this;
     }
 
-    tag.forEach((tag) => {
-      if (this.#tags[tag.toLowerCase()]) {
-        this.#tags[tag.toLowerCase()].error = true;
+    tag.forEach((t) => {
+      if (this.#tags[t.toLowerCase()]) {
+        this.#tags[t.toLowerCase()].error = true;
       }
     });
   }
