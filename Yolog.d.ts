@@ -45,7 +45,7 @@ declare class YologPlugin {
      * @param [tag] Optional tags to toggle.
      * @return self
      */
-    disableError(...tag: string[]): this;
+    public disableError(...tag: string[]): this;
     /**
      * Enable internal error passing to the underlying plugin or event handler.
      * If tag name/s are omitted, the setting will be global.
@@ -53,7 +53,7 @@ declare class YologPlugin {
      * @param [tag] Optional tags to toggle.
      * @return self
      */
-    enableError(...tag: string[]): this;
+    public enableError(...tag: string[]): this;
 }
 
 /**
@@ -221,7 +221,7 @@ declare class Yolog {
      * @param message Message to log.
      * @param args Argument list to pass to plugins for formatting.
      */
-    emergency(message: string, ...args: any[]): Promise<void>;
+    public emergency(message: string, ...args: any[]): Promise<void>;
 }
 
 export default Yolog;
