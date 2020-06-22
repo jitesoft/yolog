@@ -7,6 +7,7 @@ const common = {
     "@jitesoft/sprintf": "@jitesoft/sprintf",
     "@jitesoft/events": "@jitesoft/events"
   },
+  devtool: false,
   module: {
     rules: [
       {
