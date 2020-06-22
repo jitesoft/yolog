@@ -20,13 +20,8 @@ export default class Yolog {
   /** @type {Boolean} */
   #errors = true;
 
-  #timestamp = () => {
-    return (new Date()).getTime();
-  };
-
-  #formatter = async (message, ...args) => {
-    return Promise.resolve(sprintf(message, ...args));
-  };
+  #timestamp = () => (new Date()).getTime();
+  #formatter = async (message, ...args) => Promise.resolve(sprintf(message, ...args));
 
   constructor (plugins = [], tags = {
     debug: {

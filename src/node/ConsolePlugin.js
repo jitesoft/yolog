@@ -13,6 +13,17 @@ export default class ConsolePlugin extends Plugin {
 
   #nl = process.platform === 'win32' ? '\r\n' : '\n';
   #color = true;
+  #formatDate = (date) => date.toLocaleString();
+
+  /**
+   * Set method used to format date with.
+   * Defaults to `date.toLocaleString()`.
+   *
+   * @param {function} func Callback to use.
+   */
+  setDateFormatMethod (func) {
+    this.#formatDate = func;
+  }
 
   /**
    * Change the console plugin to use or not use colors in output.
@@ -47,14 +58,14 @@ export default class ConsolePlugin extends Plugin {
     await new Promise((resolve, reject) => {
       if (!this.color) {
         process[this.#colors[tag].call].write(
-          `[${tag.toUpperCase()}] (${(new Date(timestamp)).toLocaleString()}): ${message}${stack}${this.#nl}`,
+          `[${tag.toUpperCase()}] (${this.#formatDate(new Date(timestamp))}): ${message}${stack}${this.#nl}`,
           'UTF-8',
           (err) => err ? reject(err) : resolve()
         );
       } else {
         process[this.#colors[tag].call].write(
           `\u001b[${this.#colors[tag].color}m[${tag.toUpperCase()}] ` +
-          `(${(new Date(timestamp)).toLocaleString()}): ${message}\u001b[0m${stack}${this.#nl}`,
+          `(${this.#formatDate(new Date(timestamp))}): ${message}\u001b[0m${stack}${this.#nl}`,
           'UTF-8',
           (err) => err ? reject(err) : resolve()
         );
