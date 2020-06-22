@@ -254,7 +254,13 @@ export default class Yolog {
 
     let error = null;
     if (this.#errors && (this.#tags[tag]?.error ?? true)) {
-      error = new Error(message);
+      // Find error if any.
+      error = args.findIndex(a => a instanceof Error);
+      if (error === -1) {
+        error = null;
+      } else {
+        error = args.splice(error, 1)[0];
+      }
     }
 
     const time = this.#timestamp();
