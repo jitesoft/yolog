@@ -4,7 +4,8 @@
             "@jitesoft/main",
             {
                 "mode": "web",
-                "useBuiltIns": "entry"
+                "useBuiltIns": "entry",
+                "bugfixes": true
             }
         ]
     ]

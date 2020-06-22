@@ -1,5 +1,11 @@
 {
     "presets": [
-        "@jitesoft/main"
+        [
+            "@jitesoft/main",
+            {
+                "useBuiltIns": "entry",
+                "bugfixes": true
+            }
+        ]
     ]
 }
