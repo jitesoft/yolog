@@ -4,7 +4,8 @@
             "@jitesoft/main",
             {
                 "mode": "node",
-                "useBuiltIns": "entry"
+                "useBuiltIns": "entry",
+                "bugfixes": true
             }
         ]
     ]
