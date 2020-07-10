@@ -47,25 +47,25 @@
         ]
     },
     "dependencies": {
-        "@jitesoft/events": "^1.3.23",
-        "@jitesoft/sprintf": "^1.0.14"
+        "@jitesoft/events": "^1.3.24",
+        "@jitesoft/sprintf": "^1.0.15"
     },
     "devDependencies": {
-        "@babel/core": "^7.10.3",
-        "@jitesoft/babel-preset-main": "^2.3.2",
-        "@jitesoft/eslint-config": "^2.2.0",
+        "@babel/core": "^7.10.4",
+        "@jitesoft/babel-preset-main": "^2.4.0",
+        "@jitesoft/eslint-config": "^2.3.0",
         "babel-eslint": "^11.0.0-beta.2",
-        "babel-jest": "^26.0.1",
+        "babel-jest": "^26.1.0",
         "babel-loader": "^8.1.0",
         "core-js": "^3.6.5",
         "cross-env": "^7.0.2",
-        "eslint": "^7.3.0",
-        "jest": "^26.0.1",
-        "webpack": "^5.0.0-beta.18",
+        "eslint": "^7.4.0",
+        "jest": "^26.1.0",
+        "webpack": "^5.0.0-beta.22",
         "webpack-cli": "^4.0.0-beta.8"
     },
     "scripts": {
-        "test": "eslint src/ tests/ && jest yolog/tests/ && npm audit",
+        "test": "eslint src/ tests/ && jest yolog/tests/",
         "build:prod": "cross-env NODE_ENV=production webpack -p",
         "build:dev": "cross-env NODE_ENV=development webpack"
     }
