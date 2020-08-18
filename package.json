@@ -47,21 +47,21 @@
         ]
     },
     "dependencies": {
-        "@jitesoft/events": "^1.3.24",
-        "@jitesoft/sprintf": "^1.0.15"
+        "@jitesoft/events": "^2.0.0",
+        "@jitesoft/sprintf": "^1.0.18"
     },
     "devDependencies": {
-        "@babel/core": "^7.10.4",
-        "@jitesoft/babel-preset-main": "^2.4.0",
-        "@jitesoft/eslint-config": "^2.3.0",
+        "@babel/core": "^7.11.1",
+        "@jitesoft/babel-preset-main": "^2.5.1",
+        "@jitesoft/eslint-config": "^2.5.0",
         "babel-eslint": "^11.0.0-beta.2",
-        "babel-jest": "^26.1.0",
+        "babel-jest": "^26.3.0",
         "babel-loader": "^8.1.0",
         "core-js": "^3.6.5",
         "cross-env": "^7.0.2",
-        "eslint": "^7.4.0",
-        "jest": "^26.1.0",
-        "webpack": "^5.0.0-beta.22",
+        "eslint": "^7.7.0",
+        "jest": "^26.4.0",
+        "webpack": "^5.0.0-beta.26",
         "webpack-cli": "^4.0.0-beta.8"
     },
     "scripts": {

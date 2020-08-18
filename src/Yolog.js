@@ -267,7 +267,7 @@ export default class Yolog {
     });
 
     // Fire the events without waiting on the promises to resolve.
-    this.#eventHandler.emitAsync(tag, new Event({
+    this.#eventHandler.emit(tag, new Event({
       message: message,
       arguments: args,
       timestamp: time,
