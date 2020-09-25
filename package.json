@@ -47,12 +47,12 @@
         ]
     },
     "dependencies": {
-        "@jitesoft/events": "^2.0.1",
+        "@jitesoft/events": "^2.0.2",
         "@jitesoft/sprintf": "^1.0.19"
     },
     "devDependencies": {
         "@babel/core": "^7.11.6",
-        "@babel/eslint-parser": "^7.11.3",
+        "@babel/eslint-parser": "^7.11.5",
         "@jitesoft/babel-preset-main": "^2.5.3",
         "@jitesoft/eslint-config": "^2.6.0",
         "babel-jest": "^26.3.0",
