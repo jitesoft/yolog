@@ -7,6 +7,7 @@ export default class ConsolePlugin extends Plugin {
     alert: { call: 'error', color: 'color: red; text-decoration: italic;' },
     emergency: { call: 'error', color: 'color: red; text-decoration: underline;' },
     warning: { call: 'warn', color: 'color: yellow;' },
+    notice: { call: 'log', color: 'color: yellow' },
     debug: { call: 'log', color: 'color: lightblue;' },
     info: { call: 'info', color: '' }
   };

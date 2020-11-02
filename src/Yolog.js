@@ -26,41 +26,52 @@ export default class Yolog {
   constructor (plugins = [], tags = {
     debug: {
       enabled: true,
-      error: true
+      error: true,
+      code: 7
     },
     info: {
       enabled: true,
-      error: true
+      error: true,
+      code: 6
+    },
+    notice: {
+      enabled: true,
+      error: true,
+      code: 5
     },
     warning: {
       enabled: true,
-      error: true
+      error: true,
+      code: 4
     },
     error: {
       enabled: true,
-      error: true
+      error: true,
+      code: 3
     },
     critical: {
       enabled: true,
-      error: true
+      error: true,
+      code: 2
     },
     alert: {
       enabled: true,
-      error: true
+      error: true,
+      code: 1
     },
     emergency: {
       enabled: true,
-      error: true
+      error: true,
+      code: 0
     }
   }) {
     this.#eventHandler = new EventHandler();
 
     // Just to make sure backwards compatibility is ensured.
     for (const tag in tags) {
-      tags[tag] = (typeof tags[tag] === 'object') ? tags[tag] : {
-        enabled: tags[tag],
-        error: true
-      };
+      tags[tag] = (typeof tags[tag] === 'object')
+        ? tags[tag]
+        : { enabled: tags[tag], error: true };
     }
 
     this.#tags = tags;
@@ -157,7 +168,7 @@ export default class Yolog {
   /**
    * Get a list of tags that are active.
    *
-   * @return {Array<String>}
+   * @return {T[]}
    */
   get active () {
     return Object.keys(this.#tags).filter(this.get.bind(this));
@@ -286,6 +297,7 @@ export default class Yolog {
    * @param {String} tag Tag name.
    * @param {String} message Message to log.
    * @param {...any} [args] Argument list to pass to plugins for formatting.
+   * @return {Promise<void>}
    */
   async custom (tag, message, ...args) {
     await this.#log(tag, message, ...args);
@@ -296,6 +308,7 @@ export default class Yolog {
    *
    * @param {String} message Message to log.
    * @param {...any} [args] Argument list to pass to plugins for formatting.
+   * @return {Promise<void>}
    */
   async debug (message, ...args) {
     await this.#log('debug', message, ...args);
@@ -306,6 +319,7 @@ export default class Yolog {
    *
    * @param {String} message Message to log.
    * @param {...any} [args] Argument list to pass to plugins for formatting.
+   * @return {Promise<void>}
    */
   async info (message, ...args) {
     await this.#log('info', message, ...args);
@@ -316,9 +330,21 @@ export default class Yolog {
    *
    * @param {String} message Message to log.
    * @param {...any} [args] Argument list to pass to plugins for formatting.
+   * @return {Promise<void>}
    */
   async warning (message, ...args) {
     await this.#log('warning', message, ...args);
+  }
+
+  /**
+   * Log a notice message.
+   *
+   * @param {String} message Message to log.
+   * @param {...any} [args] Argument list to pass to plugin for formatting.
+   * @return {Promise<void>}
+   */
+  async notice (message, ...args) {
+    await this.#log('notice', message, ...args);
   }
 
   /**
@@ -326,6 +352,7 @@ export default class Yolog {
    *
    * @param {String} message
    * @param {...any} [args] Argument list to pass to plugins for formatting.
+   * @return {Promise<void>}
    */
   async error (message, ...args) {
     await this.#log('error', message, ...args);
@@ -336,6 +363,7 @@ export default class Yolog {
    *
    * @param {String} message Message to log.
    * @param {...any} [args] Argument list to pass to plugins for formatting.
+   * @return {Promise<void>}
    */
   async critical (message, ...args) {
     await this.#log('critical', message, ...args);
@@ -346,6 +374,7 @@ export default class Yolog {
    *
    * @param {String} message Message to log.
    * @param {...any} [args] Argument list to pass to plugins for formatting.
+   * @return {Promise<void>}
    */
   async alert (message, ...args) {
     await this.#log('alert', message, ...args);
@@ -356,6 +385,7 @@ export default class Yolog {
    *
    * @param {String} message Message to log.
    * @param {...any} [args] Argument list to pass to plugins for formatting.
+   * @return {Promise<void>}
    */
   async emergency (message, ...args) {
     await this.#log('emergency', message, ...args);

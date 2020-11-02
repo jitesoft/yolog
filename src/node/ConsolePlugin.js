@@ -7,6 +7,7 @@ export default class ConsolePlugin extends Plugin {
     alert: { call: 'stdout', color: '1;31' },
     emergency: { call: 'stdout', color: '1;31' },
     warning: { call: 'stdout', color: '0;33' },
+    notice: { call: 'stdout', color: '0;33' },
     debug: { call: 'stdout', color: '0;34' },
     info: { call: 'stdout', color: '0;37' }
   };
