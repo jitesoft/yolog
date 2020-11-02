@@ -11,31 +11,43 @@ export default class YologPlugin {
   #tags = {
     debug: {
       enabled: true,
-      error: true
+      error: true,
+      code: 7
     },
     info: {
       enabled: true,
-      error: true
+      error: true,
+      code: 6
+    },
+    notice: {
+      enabled: true,
+      error: true,
+      code: 5
     },
     warning: {
       enabled: true,
-      error: true
+      error: true,
+      code: 4
     },
     error: {
       enabled: true,
-      error: true
+      error: true,
+      code: 3
     },
     critical: {
       enabled: true,
-      error: true
+      error: true,
+      code: 2
     },
     alert: {
       enabled: true,
-      error: true
+      error: true,
+      code: 1
     },
     emergency: {
       enabled: true,
-      error: true
+      error: true,
+      code: 0
     }
   };
 

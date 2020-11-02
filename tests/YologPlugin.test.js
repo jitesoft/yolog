@@ -5,6 +5,7 @@ describe('Tests for plugin class.', () => {
   const defaultTags = [
     'debug',
     'info',
+    'notice',
     'warning',
     'error',
     'critical',
@@ -29,11 +30,7 @@ describe('Tests for plugin class.', () => {
       let tag = '';
       for (let i = 0; i < defaultTags.length; i++) {
         tag = defaultTags[i];
-        if (i === 0) {
-          expect(plugin.get(tag)).toBe(false);
-        } else {
-          expect(plugin.get(tag)).toBe(true);
-        }
+        expect(plugin.get(tag)).toBe(i !== 0);
       }
     });
 

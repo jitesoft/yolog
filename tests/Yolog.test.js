@@ -19,6 +19,7 @@ describe('Tests for Yolog class.', () => {
   const defaultTags = [
     'debug',
     'info',
+    'notice',
     'warning',
     'error',
     'critical',
