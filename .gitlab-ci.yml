@@ -3,14 +3,7 @@ stages:
   - deploy
 
 test:
-  stage: test
-  image: jitesoft/node:latest
-  variables:
-    NODE_ENV: development
-  before_script:
-    - npm ci
-  script:
-    - npm run test
+  extends: .npm.test
 
 deploy:
   stage: deploy
@@ -20,11 +13,12 @@ deploy:
   before_script:
     - npm ci
   script:
-    - npm run build:prod
+    - npm i npm@6
+    - ./node_modules/.bin/npm run build:prod
     - mv dist/* ./
     - rm -rf dist
-    - npm version ${CI_COMMIT_TAG}
-    - npm publish --access public
+    - ./node_modules/.bin/npm version ${CI_COMMIT_TAG}
+    - ./node_modules/.bin/npm publish --access public
   only:
     - tags
   tags:
@@ -34,3 +28,4 @@ deploy:
 include:
   - template: SAST.gitlab-ci.yml
   - remote: https://gitlab.com/jitesoft/gitlab-ci-lib/raw/master/Scan/npm.yml
+  - remote: https://gitlab.com/jitesoft/gitlab-ci-lib/raw/master/JS/test.yml
