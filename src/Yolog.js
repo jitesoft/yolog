@@ -68,7 +68,7 @@ export default class Yolog {
     this.#eventHandler = new EventHandler();
 
     // Just to make sure backwards compatibility is ensured.
-    for (const tag in tags) {
+    for (const tag of Object.keys(tags)) {
       tags[tag] = (typeof tags[tag] === 'object')
         ? tags[tag]
         : { enabled: tags[tag], error: true };
@@ -92,8 +92,9 @@ export default class Yolog {
     }
 
     tag.forEach((tag) => {
-      if (this.#tags[tag.toLowerCase()]) {
-        this.#tags[tag.toLowerCase()].error = false;
+      tag = tag.toLowerCase();
+      if (Object.hasOwn(this.#tags, tag) && this.#tags[tag]) {
+        this.#tags[tag].error = false;
       }
     });
   }
@@ -112,8 +113,9 @@ export default class Yolog {
     }
 
     tag.forEach((tag) => {
-      if (this.#tags[tag.toLowerCase()]) {
-        this.#tags[tag.toLowerCase()].error = true;
+      tag = tag.toLowerCase();
+      if (Object.hasOwn(this.#tags, tag) && this.#tags[tag]) {
+        this.#tags[tag].error = true;
       }
     });
   }
@@ -193,10 +195,22 @@ export default class Yolog {
    */
   set (tag, state = null) {
     tag = tag.toLowerCase();
+
+    if (!Object.hasOwn(this.#tags, tag)) {
+      if (typeof tag === 'string' && !(tag in this.#tags)) {
+        this.#tags[tag] = {
+          enabled: state ?? true,
+          error: true // Always default to true.
+        };
+      }
+      return this;
+    }
+
     if (tag in this.#tags) {
       this.#tags[tag].enabled = (state === null ? !this.get(tag) : state);
       return this;
     }
+
     this.#tags[tag] = {
       enabled: state === null ? false : state,
       error: true // Always default to true.
@@ -211,6 +225,10 @@ export default class Yolog {
    * @return {Boolean|undefined}
    */
   get (tag) {
+    if (!Object.hasOwn(this.#tags, tag)) {
+      return undefined;
+    }
+
     tag = tag.toLowerCase();
     return this.#tags[tag]?.enabled ?? undefined;
   }
@@ -250,6 +268,8 @@ export default class Yolog {
   }
 
   #log = async (tag, message, ...args) => {
+    tag = tag.toLowerCase();
+
     if ((this.#tags[tag]?.enabled ?? true) === false) {
       return;
     }
@@ -269,20 +289,20 @@ export default class Yolog {
       }
     }
 
-    const time = this.#timestamp();
+    const timestamp = this.#timestamp();
     const promises = this.#plugins.map((plugin) => {
       if (plugin.get(tag) === true) {
-        return plugin.log(tag, time, message, plugin.errorIsEnabled(tag) ? error : null);
+        return plugin.log(tag, timestamp, message, plugin.errorIsEnabled(tag) ? error : null);
       }
       return Promise.resolve();
     });
 
     // Fire the events without waiting on the promises to resolve.
     this.#eventHandler.emit(tag, new Event({
-      message: message,
+      message,
       arguments: args,
-      timestamp: time,
-      tag: tag,
+      timestamp,
+      tag,
       errorObject: error
     })).catch(() => { /* Should not happen. */ });
 
