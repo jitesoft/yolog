@@ -1,6 +1,7 @@
 import YologPlugin from './YologPlugin';
 import { EventHandler, Event } from '@jitesoft/events';
 import sprintf from '@jitesoft/sprintf';
+import hasOwn from 'core-js/actual/object/has-own';
 
 /**
  * @class Yolog
@@ -93,7 +94,7 @@ export default class Yolog {
 
     tag.forEach((tag) => {
       tag = tag.toLowerCase();
-      if (Object.hasOwn(this.#tags, tag) && this.#tags[tag]) {
+      if (hasOwn(this.#tags, tag) && this.#tags[tag]) {
         this.#tags[tag].error = false;
       }
     });
@@ -114,7 +115,7 @@ export default class Yolog {
 
     tag.forEach((tag) => {
       tag = tag.toLowerCase();
-      if (Object.hasOwn(this.#tags, tag) && this.#tags[tag]) {
+      if (hasOwn(this.#tags, tag) && this.#tags[tag]) {
         this.#tags[tag].error = true;
       }
     });
@@ -196,7 +197,7 @@ export default class Yolog {
   set (tag, state = null) {
     tag = tag.toLowerCase();
 
-    if (!Object.hasOwn(this.#tags, tag)) {
+    if (!hasOwn(this.#tags, tag)) {
       if (typeof tag === 'string' && !(tag in this.#tags)) {
         this.#tags[tag] = {
           enabled: state ?? true,
@@ -225,7 +226,7 @@ export default class Yolog {
    * @return {Boolean|undefined}
    */
   get (tag) {
-    if (!Object.hasOwn(this.#tags, tag)) {
+    if (!hasOwn(this.#tags, tag)) {
       return undefined;
     }
 
