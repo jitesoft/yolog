@@ -55,7 +55,7 @@
         "@babel/core": "^7.19.3",
         "@babel/eslint-parser": "^7.19.1",
         "@jitesoft/babel-preset-main": "^4.0.3",
-        "@jitesoft/eslint-config": "^4.1.8",
+        "@jitesoft/eslint-config": "^4.1.9",
         "babel-jest": "^29.2.0",
         "babel-loader": "^8.2.5",
         "core-js": "^3.25.5",
