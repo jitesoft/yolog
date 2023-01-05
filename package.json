@@ -52,7 +52,7 @@
         "@babel/runtime-corejs3": "^7.20.6"
     },
     "devDependencies": {
-        "@babel/core": "^7.20.5",
+        "@babel/core": "^7.20.12",
         "@babel/eslint-parser": "^7.19.1",
         "@jitesoft/babel-preset-main": "^4.1.1",
         "@jitesoft/eslint-config": "^4.1.13",
