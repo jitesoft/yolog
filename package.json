@@ -47,23 +47,23 @@
         ]
     },
     "dependencies": {
-        "@jitesoft/events": "2.2.12",
-        "@jitesoft/sprintf": "2.0.6",
-        "@babel/runtime-corejs3": "^7.21.0"
+        "@jitesoft/events": "2.3.1",
+        "@jitesoft/sprintf": "2.1.1",
+        "@babel/runtime-corejs3": "^7.21.5"
     },
     "devDependencies": {
-        "@babel/core": "^7.21.0",
-        "@babel/eslint-parser": "^7.19.1",
-        "@jitesoft/babel-preset-main": "^5.0.0",
-        "@jitesoft/eslint-config": "^4.1.17",
-        "babel-jest": "^29.4.3",
+        "@babel/core": "^7.21.5",
+        "@babel/eslint-parser": "^7.21.3",
+        "@jitesoft/babel-preset-main": "^5.1.1",
+        "@jitesoft/eslint-config": "^4.2.0",
+        "babel-jest": "^29.5.0",
         "babel-loader": "^9.1.2",
-        "core-js": "^3.29.0",
+        "core-js": "^3.30.1",
         "cross-env": "^7.0.3",
-        "eslint": "^8.35.0",
-        "jest": "^29.4.3",
-        "webpack": "^5.75.0",
-        "webpack-cli": "^5.0.1"
+        "eslint": "^8.39.0",
+        "jest": "^29.5.0",
+        "webpack": "^5.81.0",
+        "webpack-cli": "^5.0.2"
     },
     "scripts": {
         "test": "jest yolog/tests/",
